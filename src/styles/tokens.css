@@ -1,0 +1,33 @@
+:root {
+  /* Usage: var(--bg-main) */
+  --bg-main: #05060A;
+  --bg-elevated: #0B0D14;
+  --text-primary: #F5F7FF;
+  --text-muted: #9EA3B8;
+  --accent: #A259FF;
+  --accent-soft: rgba(162, 89, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --danger: #FF4D67;
+  --surface-glass: rgba(13, 17, 25, 0.80);
+
+  /* Typography Sizes */
+  --font-display-xl: clamp(3.4rem, 6vw, 4.6rem);
+  --font-display-lg: clamp(2.4rem, 4vw, 3.2rem);
+  --font-display-md: clamp(1.6rem, 2.6vw, 2.0rem);
+  
+  --font-body-lg: 1.1rem;
+  --font-body-md: 0.98rem;
+  --font-label: 0.82rem;
+
+  /* Spacing Scale (CSS variables for reference, but Tailwind handles most) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
+  --space-9: 72px;
+  --space-10: 96px;
+}

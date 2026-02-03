@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import './tokens.css';
+@import "tailwindcss";
+
+/* Base styles */
+@layer base {
+    :root {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        --font-heading: "Playfair Display", Georgia, serif;
+        --font-body: "Cormorant Garamond", Georgia, serif;
+        line-height: 1.6;
+        font-weight: 400;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        letter-spacing: 0.02em;
+
+        /* Luxury Typography Scale */
+        --font-size-display-xl: clamp(2.5rem, 8vw, 5.5rem);
+        --font-size-display-lg: clamp(2rem, 5vw, 3.5rem);
+        --font-size-display-md: clamp(1.4rem, 3vw, 2.2rem);
+        --font-size-body-lg: 1.25rem;
+        --font-size-body-md: 1.1rem;
+        --font-size-label: 0.75rem;
+    }
+
+    body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text-primary);
+        background-color: var(--bg-main);
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 18px;
+    }
+
+    /* Luxury Typography Helpers */
+    .font-luxury {
+        font-family: var(--font-heading);
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    
+    .font-editorial {
+        font-family: var(--font-heading);
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: 0.02em;
+    }
+    
+    .font-label {
+        font-family: var(--font-body);
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+    }
+
+    /* Custom Selection Color */
+    ::selection {
+        background: var(--accent);
+        color: var(--bg-main);
+    }
+}
+
+/* Theme Variables - Outside @layer for proper specificity */
+/* Dark Theme (default) */
+:root,
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg-main: #05060A;
+    --bg-elevated: #0B0D14;
+    --text-primary: #F5F7FF;
+    --text-muted: #9EA3B8;
+    --accent: #A259FF;
+    --accent-soft: rgba(162, 89, 255, 0.18);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --danger: #FF4D67;
+    --surface-glass: rgba(13, 17, 25, 0.80);
+    --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Light Theme - Attribute selector provides higher specificity */
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg-main: #FAFBFC;
+    --bg-elevated: #FFFFFF;
+    --text-primary: #0F1419;
+    --text-muted: #536471;
+    --accent: #8B3FD9;
+    /* Slightly darker purple for contrast */
+    --accent-soft: rgba(139, 63, 217, 0.12);
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --danger: #E0245E;
+    --surface-glass: rgba(255, 255, 255, 0.85);
+    --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Noise texture overlay for premium feel (dark mode only) */
+:root:not([data-theme="light"]) body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    z-index: 9999;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+}
+
+/* Smooth Scroll default reset */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* Custom utilities */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+/* Custom Tailwind theme using @theme */
+@theme {
+    --color-bg-main: var(--bg-main);
+    --color-bg-elevated: var(--bg-elevated);
+    --color-text-primary: var(--text-primary);
+    --color-text-muted: var(--text-muted);
+    --color-accent: var(--accent);
+    --color-accent-soft: var(--accent-soft);
+    --color-border-subtle: var(--border-subtle);
+    --color-danger: var(--danger);
+    --color-surface-glass: var(--surface-glass);
+
+    --font-family-body: "Geist Sans", "Geist", system-ui, sans-serif;
+    --font-family-display: "Geist Sans", "Geist", system-ui, sans-serif;
+
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 24px;
+    --spacing-6: 32px;
+    --spacing-7: 40px;
+    --spacing-8: 56px;
+    --spacing-9: 72px;
+    --spacing-10: 96px;
+
+    --animate-marquee: marquee 25s linear infinite;
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+}
