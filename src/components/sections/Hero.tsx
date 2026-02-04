@@ -84,7 +84,7 @@ export const Hero = () => {
                                 letterSpacing: '0.02em'
                             }}
                         >
-                            <span className="italic">{bio?.name || 'Liya Dereji'}</span>
+                            <span className="italic">{bio?.name || 'Liya Dereje'}</span>
                         </motion.h1>
 
                         <motion.p
