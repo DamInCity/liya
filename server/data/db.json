@@ -1,5 +1,23 @@
 {
   "images": [],
+  "bio": {
+    "name": "Liya Dereji",
+    "title": "Professional Model · 3 Years Experience",
+    "description": "With 3 years of modeling experience and professional training, I specialize in runway, commercial work, acting, and model coordination. I bring creativity and reliability to every project.",
+    "location": "Addis Ababa, Ethiopia · Available for fashion shows, commercials, and creative projects."
+  },
+  "stats": {
+    "languages": "English, Amharic",
+    "height": "1.75 m (5 ft 9 in)",
+    "weight": "56 kg",
+    "bust": "32 in",
+    "waist": "26 in",
+    "hips": "38 in",
+    "shoeSize": "39",
+    "hairColor": "Black",
+    "eyeColor": "Black",
+    "skinTone": "Dark tan / medium"
+  },
   "specialties": [
     {
       "id": "1",
@@ -12,10 +30,9 @@
     {
       "id": "3",
       "title": "Commercial",
-      "description": "Brand",
+      "description": "Brand campaigns and commercial advertising",
       "icon": "",
-      "createdAt": "2026-01-30T16:30:16.262Z",
-      "updatedAt": "2026-02-02T15:19:16.854Z"
+      "createdAt": "2026-01-30T16:30:16.262Z"
     },
     {
       "id": "1769849853702",
@@ -24,13 +41,6 @@
       "icon": "",
       "createdAt": "2026-01-31T08:57:33.702Z",
       "updatedAt": "2026-02-02T14:15:06.615Z"
-    },
-    {
-      "id": "1770046423354",
-      "title": "Beauty",
-      "description": "Some beautiful things",
-      "icon": "",
-      "createdAt": "2026-02-02T15:33:43.354Z"
     }
   ],
   "projects": [
@@ -50,8 +60,25 @@
           "uploadedAt": "2026-02-02T12:45:04.677Z"
         }
       ],
-      "createdAt": "2026-02-02T12:45:04.677Z",
-      "updatedAt": "2026-02-02T15:21:09.678Z"
+      "createdAt": "2026-02-02T12:45:04.677Z"
+    },
+    {
+      "id": "1770036371817",
+      "title": "Runway",
+      "description": "Did a fashion show for xyz",
+      "category": "Modelling",
+      "tags": [],
+      "link": "",
+      "images": [
+        {
+          "id": "17700363718166nwqwe889",
+          "filename": "1770036371096-917936108.webp",
+          "originalName": "IMG_5780.PNG",
+          "url": "/uploads/projects/1770036371096-917936108.webp",
+          "uploadedAt": "2026-02-02T12:46:11.816Z"
+        }
+      ],
+      "createdAt": "2026-02-02T12:46:11.817Z"
     },
     {
       "id": "1770036477335",
@@ -61,6 +88,13 @@
       "tags": [],
       "link": "",
       "images": [
+        {
+          "id": "1770036477335xqsq61v4y",
+          "filename": "1770036473234-790905677.webp",
+          "originalName": "893c0278-e188-4d03-9bb4-dadcdf1bc63b.jpg",
+          "url": "/uploads/projects/1770036473234-790905677.webp",
+          "uploadedAt": "2026-02-02T12:47:57.335Z"
+        },
         {
           "id": "1770036477335bq49wv3ln",
           "filename": "1770036473236-442774331.webp",
@@ -74,24 +108,9 @@
           "originalName": "IMG_5797.JPG",
           "url": "/uploads/projects/1770036473266-810567553.webp",
           "uploadedAt": "2026-02-02T12:47:57.335Z"
-        },
-        {
-          "id": "1770099780678shenwnkxv",
-          "filename": "1770099780020-420607920.webp",
-          "originalName": "IMG_5744.JPG",
-          "url": "/uploads/projects/1770099780020-420607920.webp",
-          "uploadedAt": "2026-02-03T06:23:00.678Z"
-        },
-        {
-          "id": "1770099798969w2o2lv9ki",
-          "filename": "1770099798590-830688651.webp",
-          "originalName": "IMG_5749.JPG",
-          "url": "/uploads/projects/1770099798590-830688651.webp",
-          "uploadedAt": "2026-02-03T06:23:18.969Z"
         }
       ],
-      "createdAt": "2026-02-02T12:47:57.335Z",
-      "updatedAt": "2026-02-03T06:23:18.969Z"
+      "createdAt": "2026-02-02T12:47:57.335Z"
     }
   ],
   "gallery": [
@@ -157,13 +176,6 @@
       "originalName": "IMG_5798.PNG",
       "url": "/uploads/gallery/gallery-1770033436228-936080555.webp",
       "uploadedAt": "2026-02-02T11:57:17.007Z"
-    },
-    {
-      "id": "1770045710633oqbj0m2hk",
-      "filename": "gallery-1770045709816-179355909.webp",
-      "originalName": "IMG_5792.PNG",
-      "url": "/uploads/gallery/gallery-1770045709816-179355909.webp",
-      "uploadedAt": "2026-02-02T15:21:50.633Z"
     }
   ],
   "certifications": [
@@ -180,35 +192,10 @@
       "url": "/uploads/certifications/cert-1770041405998-258233286.webp",
       "title": "professional",
       "uploadedAt": "2026-02-02T14:10:06.435Z"
-    },
-    {
-      "id": "1770045746346",
-      "filename": "cert-1770045745923-61770002.webp",
-      "url": "/uploads/certifications/cert-1770045745923-61770002.webp",
-      "title": "cert",
-      "uploadedAt": "2026-02-02T15:22:26.346Z"
     }
   ],
   "adminCredentials": {
-    "username": "Loya",
-    "passwordHash": "$2a$10$YklsQzVDZLJy/MSvVEqaROsWre/9A4x38kFZnM0rrxb1MwDG5N5CS"
-  },
-  "bio": {
-    "name": "Liya Dereje",
-    "title": "Professional Model · 3 Years Experience",
-    "description": "With 3 years of modeling experience and professional training, I specialize in runway, commercial work, acting, and model coordination. I bring creativity and reliability to every project. Even this one.",
-    "location": "Addis Ababa, Ethiopia "
-  },
-  "stats": {
-    "languages": "English, Amharic",
-    "height": "1.75 m (5 ft 9 in)",
-    "weight": "56 kg",
-    "bust": "32 in",
-    "waist": "26 in",
-    "hips": "38 in",
-    "shoeSize": "39",
-    "hairColor": "Black",
-    "eyeColor": "Black",
-    "skinTone": "Dark tan / medium"
+    "username": "Liya",
+    "password": "Liyajj@251"
   }
 }

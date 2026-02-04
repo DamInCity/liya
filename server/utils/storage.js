@@ -1,6 +1,10 @@
 import fs from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -86,5 +90,22 @@ export async function writeData(data) {
 // Initialize database on first run
 export async function initializeDatabase() {
     await ensureDataFile();
+    
+    // SINGLE SOURCE OF TRUTH: Initialize admin credentials from .env ONCE
+    // After this, .env is never checked again - db.json becomes the only source
+    const data = await readData();
+    if (!data.adminCredentials) {
+        data.adminCredentials = {
+            username: process.env.ADMIN_USERNAME || 'admin',
+            password: process.env.ADMIN_PASSWORD || 'L1yajj@251'
+        };
+        await writeData(data);
+        console.log('✅ Admin credentials initialized from .env → db.json');
+        console.log(`   Username: ${data.adminCredentials.username}`);
+    } else {
+        console.log('✅ Admin credentials already exist in db.json');
+        console.log(`   Username: ${data.adminCredentials.username}`);
+    }
+    
     console.log('✅ Database initialized');
 }

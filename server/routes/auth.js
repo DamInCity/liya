@@ -7,6 +7,24 @@ import { readData, writeData } from '../utils/storage.js';
 
 const router = express.Router();
 
+/**
+ * AUTHENTICATION FLOW - SINGLE SOURCE OF TRUTH
+ * ============================================
+ * 
+ * 1. On server startup (storage.js):
+ *    - If db.json has no adminCredentials → copy from .env to db.json
+ * 
+ * 2. After initialization:
+ *    - .env is NEVER checked again
+ *    - db.json is the ONLY source of truth
+ *    - All login attempts check db.json only
+ *    - All password changes update db.json only
+ * 
+ * 3. Password storage:
+ *    - Plain text (no bcrypt)
+ *    - Stored in db.json adminCredentials.password
+ */
+
 // POST /api/auth/login - Admin login
 router.post('/login',
     [
@@ -22,25 +40,26 @@ router.post('/login',
         try {
             const { username, password } = req.body;
 
-            // Read credentials from db.json first, fallback to .env
+            // SINGLE SOURCE OF TRUTH: db.json only
             const data = await readData();
-            let storedUsername = process.env.ADMIN_USERNAME || 'admin';
-            let storedPassword = process.env.ADMIN_PASSWORD || 'admin123';
-
-            if (data.adminCredentials) {
-                storedUsername = data.adminCredentials.username || storedUsername;
-                storedPassword = data.adminCredentials.password || storedPassword;
+            
+            // Safety check - adminCredentials must exist (initialized on server startup)
+            if (!data.adminCredentials) {
+                console.error('❌ adminCredentials not found in db.json - database not initialized properly');
+                return res.status(500).json({ error: 'Server configuration error' });
             }
-
-            // Debug logging
-            console.log('Login attempt:', { username, password: '***' });
-            console.log('Expected:', { storedUsername, storedPassword: '***' });
-            console.log('Match:', username === storedUsername && password === storedPassword);
+            
+            // Get credentials from db.json ONLY
+            const storedUsername = data.adminCredentials.username;
+            const storedPassword = data.adminCredentials.password;
 
             // Check username and password (plain text comparison)
             if (username !== storedUsername || password !== storedPassword) {
+                console.log('❌ Login failed:', { username, expected: storedUsername });
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
+            
+            console.log('✅ Login successful:', { username });
 
             // Generate JWT token
             const token = jwt.sign(
@@ -90,29 +109,23 @@ router.post('/change-credentials', verifyToken, [
     try {
         const { currentPassword, newUsername, newPassword } = req.body;
 
+        // SINGLE SOURCE OF TRUTH: db.json only
         const data = await readData();
         
-        // Get current credentials from db.json or .env
-        let currentUsername = process.env.ADMIN_USERNAME;
-        let currentPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-
-        if (data.adminCredentials) {
-            currentUsername = data.adminCredentials.username || currentUsername;
-            currentPasswordHash = data.adminCredentials.passwordHash || currentPasswordHash;
-        }
-
-        // Verify current password
-        const isValidPassword = await bcrypt.compare(currentPassword, currentPasswordHash);
-        if (!isValidPassword) {
-            return res.status(401).json({ error: 'Current password is incorrect' });
-        }
-
-        // Initialize adminCredentials if it doesn't exist
+        // Safety check - adminCredentials must exist
         if (!data.adminCredentials) {
-            data.adminCredentials = {
-                username: currentUsername,
-                passwordHash: currentPasswordHash
-            };
+            console.error('❌ adminCredentials not found in db.json');
+            return res.status(500).json({ error: 'Server configuration error' });
+        }
+        
+        // Get current credentials from db.json ONLY
+        const currentUsername = data.adminCredentials.username;
+        const currentStoredPassword = data.adminCredentials.password;
+
+        // Verify current password (plain text comparison)
+        if (currentPassword !== currentStoredPassword) {
+            console.log('❌ Current password incorrect');
+            return res.status(401).json({ error: 'Current password is incorrect' });
         }
 
         let updated = false;
@@ -125,15 +138,15 @@ router.post('/change-credentials', verifyToken, [
             updated = true;
         }
 
-        // Update password if provided
+        // Update password if provided (store as plain text)
         if (newPassword) {
-            const newHash = await bcrypt.hash(newPassword, 10);
-            data.adminCredentials.passwordHash = newHash;
+            data.adminCredentials.password = newPassword;
             updated = true;
         }
 
         if (updated) {
             await writeData(data);
+            console.log('✅ Credentials updated in db.json:', { username: finalUsername, passwordChanged: !!newPassword });
 
             // Generate new token with updated username
             const newToken = jwt.sign(
