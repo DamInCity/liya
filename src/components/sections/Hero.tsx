@@ -211,7 +211,7 @@ export const Hero = () => {
                                 style={{ borderColor: 'var(--border-subtle)' }}
                             >
                                 <img
-                                    src="liya/liya-hero.png"
+                                    src="liya/liya-hero.webp"
                                     alt="Liya Dereje Adane - Professional Model"
                                     className="absolute inset-0 w-full h-full object-cover"
                                 />

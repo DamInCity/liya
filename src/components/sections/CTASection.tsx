@@ -1,17 +1,32 @@
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
+interface GalleryImage {
+    id: string;
+    url: string;
+    filename: string;
+}
+
 export const CTASection = () => {
     const [showSticky, setShowSticky] = useState(false);
     const { scrollY } = useScroll();
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+    useEffect(() => {
+        const fetchGalleryImages = async () => {
+            try {
+                const apiUrl = import.meta.env.VITE_API_URL || '/api';
+                const response = await fetch(`${apiUrl}/gallery/public`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setGalleryImages(data.slice(0, 3));
+                }
+            } catch (error) {
+                console.error('Error fetching gallery images:', error);
+            }
+        };
+        fetchGalleryImages();
+    }, []);
 
     useEffect(() => {
         return scrollY.on('change', (latest) => {
@@ -20,33 +35,6 @@ export const CTASection = () => {
             setShowSticky(isPastHero && !isAtBottom);
         });
     }, [scrollY]);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus('idle');
-
-        try {
-            const response = await fetch('http://localhost:5000/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                setSubmitStatus('success');
-                setFormData({ name: '', email: '', phone: '', message: '' });
-            } else {
-                setSubmitStatus('error');
-            }
-        } catch (error) {
-            setSubmitStatus('error');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
 
     return (
         <>
@@ -89,132 +77,58 @@ export const CTASection = () => {
                                 </p>
                                 <div className="flex items-center gap-4 text-sm" style={{ color: 'var(--text-muted)' }}>
                                     <div className="flex -space-x-2">
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--accent)] to-[#C896FF] border-2" style={{ borderColor: 'var(--bg-main)' }} />
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C896FF] to-[#8B3FD9] border-2" style={{ borderColor: 'var(--bg-main)' }} />
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8B3FD9] to-[var(--accent)] border-2" style={{ borderColor: 'var(--bg-main)' }} />
+                                        {galleryImages.length > 0 ? (
+                                            galleryImages.map((img, idx) => {
+                                                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+                                                return (
+                                                    <img
+                                                        key={img.id}
+                                                        src={`${backendUrl}${img.url}`}
+                                                        alt={`Gallery ${idx + 1}`}
+                                                        className="w-10 h-10 rounded-full border-2 object-cover"
+                                                        style={{ borderColor: 'var(--bg-main)' }}
+                                                    />
+                                                );
+                                            })
+                                        ) : (
+                                            <>
+                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent)] to-[#C896FF] border-2" style={{ borderColor: 'var(--bg-main)' }} />
+                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C896FF] to-[#8B3FD9] border-2" style={{ borderColor: 'var(--bg-main)' }} />
+                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#8B3FD9] to-[var(--accent)] border-2" style={{ borderColor: 'var(--bg-main)' }} />
+                                            </>
+                                        )}
                                     </div>
-                                    <span>Trusted by 50+ international brands</span>
+                                    <span>Trusted by international brands</span>
                                 </div>
                             </div>
 
-                            {/* Right: Form */}
-                            <form className="space-y-4" onSubmit={handleSubmit}>
-                                <div className="space-y-2">
-                                    <label
-                                        className="text-xs uppercase font-bold tracking-widest"
+                            {/* Right: Contact Section */}
+                            <div className="space-y-4">
+                                <div className="space-y-6">
+                                    <p
+                                        className="text-base md:text-lg leading-relaxed"
                                         style={{ color: 'var(--text-muted)' }}
                                     >
-                                        Your Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full rounded-lg p-3 md:p-4 outline-none transition-all border text-sm md:text-base"
-                                        style={{
-                                            backgroundColor: 'var(--bg-main)',
-                                            borderColor: 'var(--border-subtle)',
-                                            color: 'var(--text-primary)'
-                                        }}
-                                        placeholder="Jane Doe"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        className="text-xs uppercase font-bold tracking-widest"
-                                        style={{ color: 'var(--text-muted)' }}
-                                    >
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full rounded-lg p-3 md:p-4 outline-none transition-all border text-sm md:text-base"
-                                        style={{
-                                            backgroundColor: 'var(--bg-main)',
-                                            borderColor: 'var(--border-subtle)',
-                                            color: 'var(--text-primary)'
-                                        }}
-                                        placeholder="jane@example.com"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        className="text-xs uppercase font-bold tracking-widest"
-                                        style={{ color: 'var(--text-muted)' }}
-                                    >
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        required
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        className="w-full rounded-lg p-3 md:p-4 outline-none transition-all border text-sm md:text-base"
-                                        style={{
-                                            backgroundColor: 'var(--bg-main)',
-                                            borderColor: 'var(--border-subtle)',
-                                            color: 'var(--text-primary)'
-                                        }}
-                                        placeholder="+1 (555) 123-4567"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label
-                                        className="text-xs uppercase font-bold tracking-widest"
-                                        style={{ color: 'var(--text-muted)' }}
-                                    >
-                                        Message
-                                    </label>
-                                    <textarea
-                                        rows={5}
-                                        required
-                                        value={formData.message}
-                                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                        className="w-full rounded-lg p-3 md:p-4 outline-none transition-all resize-none border text-sm md:text-base"
-                                        style={{
-                                            backgroundColor: 'var(--bg-main)',
-                                            borderColor: 'var(--border-subtle)',
-                                            color: 'var(--text-primary)'
-                                        }}
-                                        placeholder="Send me an email..."
-                                    />
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="w-full font-bold py-3 md:py-4 rounded-lg transition-shadow duration-300 mt-2 hover:shadow-lg text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
-                                    style={{
-                                        backgroundColor: 'var(--accent)',
-                                        color: 'var(--bg-main)'
-                                    }}
-                                    data-cursor="cta"
-                                >
-                                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                                </button>
-                                
-                                {submitStatus === 'success' && (
-                                    <p className="text-xs text-center" style={{ color: 'var(--accent)' }}>
-                                        Message sent successfully! I'll get back to you soon.
+                                        Ready to collaborate? Click below to send me an email and let's discuss your project.
                                     </p>
-                                )}
-                                {submitStatus === 'error' && (
-                                    <p className="text-xs text-center" style={{ color: '#ef4444' }}>
-                                        Failed to send message. Please try again or contact via WhatsApp.
+
+                                    <a
+                                        href="mailto:contact@liya.com?subject=Let's Work Together&body=Hi Liya,%0D%0A%0D%0AI would like to discuss a collaboration opportunity with you.%0D%0A%0D%0AProject Details:%0D%0A%0D%0A%0D%0ABest regards,"
+                                        className="block w-full font-bold py-3 md:py-4 rounded-lg transition-shadow duration-300 hover:shadow-lg text-sm md:text-base text-center"
+                                        style={{
+                                            backgroundColor: 'var(--accent)',
+                                            color: 'var(--bg-main)'
+                                        }}
+                                        data-cursor="cta"
+                                    >
+                                        Send Email
+                                    </a>
+
+                                    <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
+                                        Or reach out via WhatsApp using the button below
                                     </p>
-                                )}
-                                
-                                <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
-                                    Prefer WhatsApp? Message me directly below.
-                                </p>
-                            </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
