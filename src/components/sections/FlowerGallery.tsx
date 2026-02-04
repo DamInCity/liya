@@ -41,8 +41,8 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
     useEffect(() => {
         const fetchGalleryImages = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-                const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+                const apiUrl = import.meta.env.VITE_API_URL || '/api';
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
                 
                 const response = await fetch(`${apiUrl}/gallery/public`);
                 
@@ -70,7 +70,7 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
 
         // If images passed as props, use them
         if (propImages && propImages.length > 0) {
-            const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+            const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
             setFlowerImages(propImages.map(img => `${backendUrl}${img.url}`));
             setLoading(false);
         } else {

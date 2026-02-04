@@ -79,7 +79,7 @@ export const AdminDashboard = () => {
 
         setChangingCredentials(true);
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/auth/change-credentials`, {
                 method: 'POST',
                 headers: {
@@ -599,7 +599,7 @@ export const AdminDashboard = () => {
                                                         {project.images.map((img: any) => (
                                                             <div key={img.id} className="relative group">
                                                                 <img
-                                                                    src={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${img.url}`}
+                                                                    src={`${import.meta.env.VITE_BACKEND_URL || ''}${img.url}`}
                                                                     alt={project.title}
                                                                     className="w-full h-24 sm:h-32 object-cover rounded"
                                                                 />
@@ -699,7 +699,7 @@ export const AdminDashboard = () => {
                                                     {project.images.map((img: any) => (
                                                         <img
                                                             key={img.id}
-                                                            src={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${img.url}`}
+                                                            src={`${import.meta.env.VITE_BACKEND_URL || ''}${img.url}`}
                                                             alt={project.title}
                                                             className="w-full h-16 sm:h-20 object-cover rounded"
                                                         />

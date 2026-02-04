@@ -28,8 +28,8 @@ export const ServicesStrip = () => {
                 setSpecialties(specialtiesData.specialties || []);
 
                 // Fetch gallery images for backgrounds
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-                const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+                const apiUrl = import.meta.env.VITE_API_URL || '/api';
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
                 
                 const response = await fetch(`${apiUrl}/gallery/public`);
                 

@@ -25,7 +25,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
 
     const loadCertifications = async () => {
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/certifications`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -50,7 +50,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
         
         setUploading(true);
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/certifications/upload`, {
                 method: 'POST',
                 headers: {
@@ -78,7 +78,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
         if (!confirm('Are you sure you want to delete this certification?')) return;
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/certifications/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -100,7 +100,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
 
     const handleUpdateTitle = async (id: string) => {
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/certifications/${id}`, {
                 method: 'PATCH',
                 headers: {
@@ -125,7 +125,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
         }
     };
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
 
     if (loading) {
         return <div style={{ color: 'var(--text-muted)' }}>Loading certifications...</div>;

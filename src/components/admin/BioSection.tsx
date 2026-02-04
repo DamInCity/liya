@@ -23,7 +23,7 @@ export const BioSection = ({ token }: { token: string }) => {
 
     const fetchBio = async () => {
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/bio/public`);
             const data = await response.json();
             setBio({
@@ -44,7 +44,7 @@ export const BioSection = ({ token }: { token: string }) => {
         setSaving(true);
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/bio`, {
                 method: 'PUT',
                 headers: {

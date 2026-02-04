@@ -14,8 +14,8 @@ export const GallerySection = () => {
     const [uploading, setUploading] = useState(false);
     const [selectedImages, setSelectedImages] = useState<Set<string>>(new Set());
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+    const apiUrl = import.meta.env.VITE_API_URL || '/api';
 
     useEffect(() => {
         fetchGalleryImages();

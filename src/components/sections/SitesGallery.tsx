@@ -24,7 +24,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     // Use backend URL for images (not API URL)
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
     const images = portfolio.images?.length > 0 
         ? portfolio.images.map(img => `${backendUrl}${img.url}`)
         : ['/images/project-1.png']; // Fallback

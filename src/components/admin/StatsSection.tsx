@@ -35,7 +35,7 @@ export const StatsSection = ({ token }: { token: string }) => {
 
     const fetchStats = async () => {
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/stats/public`);
             const data = await response.json();
             setStats({
@@ -62,7 +62,7 @@ export const StatsSection = ({ token }: { token: string }) => {
         setSaving(true);
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/stats`, {
                 method: 'PUT',
                 headers: {
