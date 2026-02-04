@@ -24,22 +24,21 @@ router.post('/login',
 
             // Read credentials from db.json first, fallback to .env
             const data = await readData();
-            let storedUsername = process.env.ADMIN_USERNAME;
-            let storedPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+            let storedUsername = process.env.ADMIN_USERNAME || 'admin';
+            let storedPassword = process.env.ADMIN_PASSWORD || 'admin123';
 
             if (data.adminCredentials) {
                 storedUsername = data.adminCredentials.username || storedUsername;
-                storedPasswordHash = data.adminCredentials.passwordHash || storedPasswordHash;
+                storedPassword = data.adminCredentials.password || storedPassword;
             }
 
-            // Check username
-            if (username !== storedUsername) {
-                return res.status(401).json({ error: 'Invalid credentials' });
-            }
+            // Debug logging
+            console.log('Login attempt:', { username, password: '***' });
+            console.log('Expected:', { storedUsername, storedPassword: '***' });
+            console.log('Match:', username === storedUsername && password === storedPassword);
 
-            // Verify password
-            const isValidPassword = await bcrypt.compare(password, storedPasswordHash);
-            if (!isValidPassword) {
+            // Check username and password (plain text comparison)
+            if (username !== storedUsername || password !== storedPassword) {
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
 
