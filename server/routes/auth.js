@@ -53,13 +53,18 @@ router.post('/login',
             const storedUsername = data.adminCredentials.username;
             const storedPassword = data.adminCredentials.password;
 
+            // Debug logging
+            console.log('Login attempt:', { username, password });
+            console.log('Expected:', { username: storedUsername, password: storedPassword });
+            console.log('Match:', username === storedUsername && password === storedPassword);
+
             // Check username and password (plain text comparison)
             if (username !== storedUsername || password !== storedPassword) {
-                console.log('❌ Login failed:', { username, expected: storedUsername });
+                console.log('❌ Login failed');
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
             
-            console.log('✅ Login successful:', { username });
+            console.log('✅ Login successful');
 
             // Generate JWT token
             const token = jwt.sign(
