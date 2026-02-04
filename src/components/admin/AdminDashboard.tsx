@@ -228,7 +228,11 @@ export const AdminDashboard = () => {
     };
 
     const handleAddProjectImagesClick = async (projectId: string) => {
-        const input = document.getElementById(`add-images-${projectId}`) as HTMLInputElement | null;
+        // Try both possible input IDs (edit form and direct button)
+        let input = document.getElementById(`add-images-${projectId}`) as HTMLInputElement | null;
+        if (!input) {
+            input = document.getElementById(`add-images-direct-${projectId}`) as HTMLInputElement | null;
+        }
         if (!input || !input.files || input.files.length === 0) {
             alert('Please select images to upload');
             return;
@@ -624,8 +628,10 @@ export const AdminDashboard = () => {
                                             <div className="mt-4">
                                                 <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Add Images (select multiple)</label>
                                                 <div className="flex gap-2 items-center">
-                                                    <input id={`add-images-${project.id}`} name="addImages" type="file" accept="image/*" multiple className="p-2 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
-                                                    <button type="button" onClick={() => handleAddProjectImagesClick(project.id)} className="py-2 px-3 rounded-lg font-bold" style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-main)' }}>{addingImagesProjectId === project.id ? 'Uploading...' : 'Add Images'}</button>
+                                                    <input id={`add-images-${project.id}`} name="addImages" type="file" accept="image/*" multiple className="p-2 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} onChange={() => handleAddProjectImagesClick(project.id)} />
+                                                    {addingImagesProjectId === project.id && (
+                                                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Uploading...</span>
+                                                    )}
                                                 </div>
                                             </div>
 
