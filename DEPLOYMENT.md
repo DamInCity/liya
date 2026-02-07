@@ -17,10 +17,10 @@ NODE_ENV=production npm start &
 ### 3. Configure Nginx
 ```bash
 # Copy the nginx config
-sudo cp nginx.conf /etc/nginx/sites-available/portfolio
+sudo cp nginx.conf /etc/nginx/sites-available/liyadereje
 
 # Enable the site
-sudo ln -sf /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/liyadereje /etc/nginx/sites-enabled/
 
 # Test the configuration
 sudo nginx -t
@@ -109,7 +109,7 @@ Using Let's Encrypt:
 sudo apt install certbot python3-certbot-nginx
 
 # Get certificate (replace with your domain)
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d liyadereje.com -d www.liyadereje.com
 
 # Auto-renewal is set up automatically
 sudo certbot renew --dry-run
