@@ -20,97 +20,23 @@
   },
   "specialties": [
     {
-      "id": "1",
+      "id": "1770452917182",
       "title": "Runway",
-      "description": "High fashion runway shows for international designers",
+      "description": "Runway to model",
       "icon": "",
-      "createdAt": "2026-01-30T16:30:16.262Z",
-      "updatedAt": "2026-01-31T08:57:43.636Z"
-    },
-    {
-      "id": "3",
-      "title": "Commercial",
-      "description": "Brand campaigns and commercial advertising",
-      "icon": "",
-      "createdAt": "2026-01-30T16:30:16.262Z"
-    },
-    {
-      "id": "1769849853702",
-      "title": "Movie title",
-      "description": "I am an introverted, grounded, and reliable professional with a keen eye for creativity.",
-      "icon": "",
-      "createdAt": "2026-01-31T08:57:33.702Z",
-      "updatedAt": "2026-02-02T14:15:06.615Z"
+      "createdAt": "2026-02-07T08:28:37.182Z"
     }
   ],
   "projects": [
     {
-      "id": "1770036304677",
-      "title": "Movies",
-      "description": "Starred in this film.",
-      "category": "Acting",
+      "id": "1770453125848",
+      "title": "Environmentally fit",
+      "description": "Project description",
+      "category": "Environment",
       "tags": [],
       "link": "",
-      "images": [
-        {
-          "id": "1770036304677hiub86el0",
-          "filename": "1770036304381-732796106.webp",
-          "originalName": "IMG_5777.PNG",
-          "url": "/uploads/projects/1770036304381-732796106.webp",
-          "uploadedAt": "2026-02-02T12:45:04.677Z"
-        }
-      ],
-      "createdAt": "2026-02-02T12:45:04.677Z"
-    },
-    {
-      "id": "1770036371817",
-      "title": "Runway",
-      "description": "Did a fashion show for xyz",
-      "category": "Modelling",
-      "tags": [],
-      "link": "",
-      "images": [
-        {
-          "id": "17700363718166nwqwe889",
-          "filename": "1770036371096-917936108.webp",
-          "originalName": "IMG_5780.PNG",
-          "url": "/uploads/projects/1770036371096-917936108.webp",
-          "uploadedAt": "2026-02-02T12:46:11.816Z"
-        }
-      ],
-      "createdAt": "2026-02-02T12:46:11.817Z"
-    },
-    {
-      "id": "1770036477335",
-      "title": "Advertisments",
-      "description": "Product marketing for this company",
-      "category": "Adverts",
-      "tags": [],
-      "link": "",
-      "images": [
-        {
-          "id": "1770036477335xqsq61v4y",
-          "filename": "1770036473234-790905677.webp",
-          "originalName": "893c0278-e188-4d03-9bb4-dadcdf1bc63b.jpg",
-          "url": "/uploads/projects/1770036473234-790905677.webp",
-          "uploadedAt": "2026-02-02T12:47:57.335Z"
-        },
-        {
-          "id": "1770036477335bq49wv3ln",
-          "filename": "1770036473236-442774331.webp",
-          "originalName": "IMG_5796.JPG",
-          "url": "/uploads/projects/1770036473236-442774331.webp",
-          "uploadedAt": "2026-02-02T12:47:57.335Z"
-        },
-        {
-          "id": "1770036477335zsq0tber8",
-          "filename": "1770036473266-810567553.webp",
-          "originalName": "IMG_5797.JPG",
-          "url": "/uploads/projects/1770036473266-810567553.webp",
-          "uploadedAt": "2026-02-02T12:47:57.335Z"
-        }
-      ],
-      "createdAt": "2026-02-02T12:47:57.335Z"
+      "images": [],
+      "createdAt": "2026-02-07T08:32:05.848Z"
     }
   ],
   "gallery": [
@@ -180,18 +106,12 @@
   ],
   "certifications": [
     {
-      "id": "1770041385085",
-      "filename": "cert-1770041384748-907950559.webp",
-      "url": "/uploads/certifications/cert-1770041384748-907950559.webp",
-      "title": "tyyyy",
-      "uploadedAt": "2026-02-02T14:09:45.085Z"
-    },
-    {
-      "id": "1770041406435",
-      "filename": "cert-1770041405998-258233286.webp",
-      "url": "/uploads/certifications/cert-1770041405998-258233286.webp",
-      "title": "professional",
-      "uploadedAt": "2026-02-02T14:10:06.435Z"
+      "id": "1770453157460",
+      "filename": "",
+      "url": "",
+      "title": "Professional Cert",
+      "description": "Certification",
+      "uploadedAt": "2026-02-07T08:32:37.460Z"
     }
   ],
   "adminCredentials": {

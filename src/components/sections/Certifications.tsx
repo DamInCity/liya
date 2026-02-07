@@ -7,6 +7,7 @@ interface Certification {
     url: string;
     filename: string;
     title?: string;
+    description?: string;
     uploadedAt: string;
 }
 
@@ -109,7 +110,7 @@ export const Certifications = () => {
                     </motion.h2>
                 </div>
 
-                {/* Certifications Grid */}
+                {/* Certifications Grid - Text Only */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     {certifications.map((cert, index) => (
                         <motion.div
@@ -118,67 +119,38 @@ export const Certifications = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-50px" }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            onClick={() => handleImageClick(index)}
-                            className="group cursor-pointer"
-                            data-cursor="link"
+                            className="group p-6 rounded-xl border transition-all duration-300 hover:-translate-y-2"
+                            style={{
+                                borderColor: 'var(--border-subtle)',
+                                backgroundColor: 'var(--bg-elevated)',
+                                boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.3)'
+                            }}
                         >
-                            <div
-                                className="relative aspect-[3/4] rounded-xl overflow-hidden border transition-all duration-300 group-hover:-translate-y-2"
-                                style={{
-                                    borderColor: 'var(--border-subtle)',
-                                    boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.3)'
-                                }}
-                            >
-                                <img
-                                    src={cert.url}
-                                    alt={cert.title || `Certification ${index + 1}`}
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                                
-                                {/* Overlay on hover */}
-                                <div 
-                                    className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+                            <div className="flex items-center gap-2 mb-3">
+                                <h3 
+                                    className="text-lg font-bold"
+                                    style={{ color: 'var(--text-primary)' }}
                                 >
-                                    {cert.title && (
-                                        <p className="text-white text-sm font-normal">
-                                            {cert.title}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Accent border on hover */}
-                                <div 
-                                    className="absolute inset-0 border-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
-                                    style={{ borderColor: 'var(--accent)' }}
-                                />
+                                    {cert.title || `Certification ${index + 1}`}
+                                </h3>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                                    <circle cx="12" cy="12" r="10" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2"/>
+                                    <path d="M9 12.5L11 14.5L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
                             </div>
+                            {cert.description && (
+                                <p 
+                                    className="text-sm leading-relaxed"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    {cert.description}
+                                </p>
+                            )}
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Hint text */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="text-center mt-8 font-label tracking-[0.2em] text-xs uppercase"
-                    style={{ color: 'var(--text-muted)' }}
-                >
-                    Click to view full size
-                </motion.p>
             </div>
-
-            {/* Lightbox */}
-            {lightboxOpen && (
-                <Lightbox
-                    images={certifications.map(cert => cert.url)}
-                    currentIndex={currentImageIndex}
-                    onClose={handleCloseLightbox}
-                    onNext={handleNextImage}
-                    onPrev={handlePrevImage}
-                />
-            )}
         </section>
     );
 };

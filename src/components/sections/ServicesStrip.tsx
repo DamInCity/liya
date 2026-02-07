@@ -95,19 +95,6 @@ export const ServicesStrip = () => {
                                 }}
                                 data-cursor="link"
                             >
-                                {/* Background Image */}
-                                {galleryImages.length > 0 && (
-                                    <div 
-                                        className="absolute inset-0 z-0 transition-all duration-700 group-hover:scale-105"
-                                        style={{
-                                            backgroundImage: `url(${galleryImages[index % galleryImages.length]})`,
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                            opacity: 0.12
-                                        }}
-                                    />
-                                )}
-                                
                                 {/* Accent Color Overlay */}
                                 <div 
                                     className="absolute inset-0 z-0 transition-opacity duration-500 group-hover:opacity-20"

@@ -56,9 +56,9 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
                     style={{ backgroundColor: accent }}
                 />
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 grid lg:grid-cols-2 gap-8 lg:gap-24 items-center relative">
-                    {/* Card Fan Layout (Left) - Mobile first sizing */}
-                    <div className="order-2 lg:order-1 relative flex justify-center lg:justify-start items-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 flex items-center justify-center relative">
+                    {/* Card Fan Layout (Left) - Mobile first sizing - HIDDEN */}
+                    <div className="order-2 lg:order-1 relative flex justify-center lg:justify-start items-center" style={{ display: 'none' }}>
                         <div className="relative w-full max-w-sm md:max-w-md lg:max-w-[520px] h-[280px] sm:h-[320px] md:h-[400px] perspective-1000 lg:-translate-x-12">
                             {/* Fan of cards - smaller on mobile */}
                             {images.slice(0, 3).map((image, imgIndex) => {
@@ -110,14 +110,14 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
 
                     {/* Portfolio Info (Right) */}
                     <motion.div
-                        className="order-1 lg:order-2 flex flex-col justify-center relative z-20 lg:pl-8"
+                        className="order-1 flex flex-col justify-center items-center text-center relative z-20"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
                         <span className="font-label tracking-[0.3em] text-xs mb-4 uppercase" style={{ color: accent }}>
-                            Campaign {String(index + 1).padStart(2, '0')}
+                            Project {String(index + 1).padStart(2, '0')}
                         </span>
                         <h3 
                             className="text-2xl sm:text-3xl lg:text-4xl font-normal mb-2 leading-tight italic" 
@@ -152,7 +152,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
                         <button
                             onClick={handleViewMore}
                             className="font-label tracking-[0.2em] text-xs uppercase hover:opacity-70 transition-opacity flex items-center gap-3 group"
-                            style={{ color: accent }}
+                            style={{ color: accent, display: 'none' }}
                             data-cursor="link"
                         >
                             View Gallery
@@ -179,6 +179,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
 export const SitesGallery = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -194,6 +195,40 @@ export const SitesGallery = () => {
 
         fetchProjects();
     }, []);
+
+    // Auto-scroll with infinite loop
+    useEffect(() => {
+        if (projects.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => {
+                const nextIndex = (prevIndex + 1) % projects.length;
+                scrollToProject(nextIndex);
+                return nextIndex;
+            });
+        }, 5000); // Auto-scroll every 5 seconds
+
+        return () => clearInterval(interval);
+    }, [projects.length]);
+
+    const scrollToProject = (index: number) => {
+        const container = document.getElementById('sites');
+        if (container) {
+            const scrollAmount = container.clientWidth * index;
+            container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+            setCurrentIndex(index);
+        }
+    };
+
+    const handlePrevProject = () => {
+        const prevIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
+        scrollToProject(prevIndex);
+    };
+
+    const handleNextProject = () => {
+        const nextIndex = (currentIndex + 1) % projects.length;
+        scrollToProject(nextIndex);
+    };
 
     if (loading) {
         return (
@@ -218,10 +253,70 @@ export const SitesGallery = () => {
     }
 
     return (
-        <div id="sites" className="snap-y snap-mandatory scroll-smooth relative z-10">
-            {projects.map((portfolio, i) => (
-                <PortfolioCard key={portfolio.id} portfolio={portfolio} index={i} />
-            ))}
+        <div className="relative">
+            <div id="sites" className="relative z-10 overflow-x-auto snap-x snap-mandatory scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style>{`
+                    #sites::-webkit-scrollbar { display: none; }
+                `}</style>
+                <div className="flex">
+                    {projects.map((portfolio, i) => (
+                        <div key={portfolio.id} className="min-w-full snap-center">
+                            <PortfolioCard portfolio={portfolio} index={i} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            {projects.length > 1 && (
+                <>
+                    {/* Previous Button */}
+                    <button
+                        onClick={handlePrevProject}
+                        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                        style={{
+                            backgroundColor: 'var(--accent)',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                        }}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--bg-main)' }} />
+                        </svg>
+                    </button>
+
+                    {/* Next Button */}
+                    <button
+                        onClick={handleNextProject}
+                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                        style={{
+                            backgroundColor: 'var(--accent)',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                        }}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--bg-main)' }} />
+                        </svg>
+                    </button>
+
+                    {/* Page Indicator */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}>
+                        {projects.map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => scrollToProject(i)}
+                                className="w-2 h-2 rounded-full transition-all duration-300"
+                                style={{
+                                    backgroundColor: i === currentIndex ? 'var(--accent)' : 'var(--text-muted)',
+                                    opacity: i === currentIndex ? 1 : 0.4,
+                                    transform: i === currentIndex ? 'scale(1.3)' : 'scale(1)'
+                                }}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 };

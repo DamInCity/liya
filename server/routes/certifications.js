@@ -71,35 +71,47 @@ router.get('/', verifyToken, async (req, res) => {
 // POST new certification
 router.post('/upload', verifyToken, upload.single('image'), async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded' });
-        }
-
-        // Generate output path for optimized image
-        const outputPath = req.file.path.replace(path.extname(req.file.path), '.webp');
-        
-        // Optimize the uploaded image
-        const optimizedResult = await optimizeImage(req.file.path, outputPath, {
-            maxWidth: 1200,
-            maxHeight: 1600,
-            quality: 85
-        });
-
         const data = await readData();
         if (!data.certifications) {
             data.certifications = [];
         }
 
-        // Use the optimized filename
-        const optimizedFilename = path.basename(optimizedResult.optimizedPath);
+        let certification;
 
-        const certification = {
-            id: Date.now().toString(),
-            filename: optimizedFilename,
-            url: `/uploads/certifications/${optimizedFilename}`,
-            title: req.body.title || '',
-            uploadedAt: new Date().toISOString()
-        };
+        // Check if file was uploaded
+        if (req.file) {
+            // Generate output path for optimized image
+            const outputPath = req.file.path.replace(path.extname(req.file.path), '.webp');
+            
+            // Optimize the uploaded image
+            const optimizedResult = await optimizeImage(req.file.path, outputPath, {
+                maxWidth: 1200,
+                maxHeight: 1600,
+                quality: 85
+            });
+
+            // Use the optimized filename
+            const optimizedFilename = path.basename(optimizedResult.optimizedPath);
+
+            certification = {
+                id: Date.now().toString(),
+                filename: optimizedFilename,
+                url: `/uploads/certifications/${optimizedFilename}`,
+                title: req.body.title || '',
+                description: req.body.description || '',
+                uploadedAt: new Date().toISOString()
+            };
+        } else {
+            // No image uploaded - create certification with just text
+            certification = {
+                id: Date.now().toString(),
+                filename: '',
+                url: '',
+                title: req.body.title || '',
+                description: req.body.description || '',
+                uploadedAt: new Date().toISOString()
+            };
+        }
 
         data.certifications.push(certification);
         await writeData(data);
@@ -137,10 +149,12 @@ router.delete('/:id', verifyToken, async (req, res) => {
 
         const certification = data.certifications[certIndex];
         
-        // Delete the file
-        const filePath = join(__dirname, '..', certification.url);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+        // Delete the file only if it exists
+        if (certification.url && certification.url !== '') {
+            const filePath = join(__dirname, '..', certification.url);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
         }
 
         data.certifications.splice(certIndex, 1);
@@ -156,11 +170,11 @@ router.delete('/:id', verifyToken, async (req, res) => {
     }
 });
 
-// UPDATE certification title
+// UPDATE certification title and description
 router.patch('/:id', verifyToken, async (req, res) => {
     try {
         const { id } = req.params;
-        const { title } = req.body;
+        const { title, description } = req.body;
         const data = await readData();
         
         if (!data.certifications) {
@@ -173,7 +187,12 @@ router.patch('/:id', verifyToken, async (req, res) => {
             return res.status(404).json({ error: 'Certification not found' });
         }
 
-        data.certifications[certIndex].title = title;
+        if (title !== undefined) {
+            data.certifications[certIndex].title = title;
+        }
+        if (description !== undefined) {
+            data.certifications[certIndex].description = description;
+        }
         await writeData(data);
 
         res.json({ 

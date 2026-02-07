@@ -557,7 +557,7 @@ export const AdminDashboard = () => {
                                         <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Tags (comma-separated)</label>
                                         <input name="tags" type="text" placeholder="fashion, luxury, campaign" className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
                                     </div>
-                                    <div>
+                                    <div style={{ display: 'none' }}>
                                         <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Images (select multiple)</label>
                                         <input name="images" type="file" accept="image/*" multiple className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
                                     </div>
@@ -595,9 +595,9 @@ export const AdminDashboard = () => {
                                                 <input name="tags" type="text" defaultValue={project.tags?.join(', ')} placeholder="fashion, luxury, campaign" className="w-full p-3 rounded-lg border text-sm sm:text-base" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
                                             </div>
                                             
-                                            {/* Display existing images with delete buttons */}
+                                            {/* Display existing images with delete buttons - HIDDEN */}
                                             {project.images && project.images.length > 0 && (
-                                                <div>
+                                                <div style={{ display: 'none' }}>
                                                     <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Current Images</label>
                                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                                                         {project.images.map((img: any) => (
@@ -624,8 +624,8 @@ export const AdminDashboard = () => {
                                                 </div>
                                             )}
 
-                                            {/* Add new images */}
-                                            <div className="mt-4">
+                                            {/* Add new images - HIDDEN */}
+                                            <div className="mt-4" style={{ display: 'none' }}>
                                                 <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Add Images (select multiple)</label>
                                                 <div className="flex gap-2 items-center">
                                                     <input id={`add-images-${project.id}`} name="addImages" type="file" accept="image/*" multiple className="p-2 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} onChange={() => handleAddProjectImagesClick(project.id)} />
@@ -681,7 +681,8 @@ export const AdminDashboard = () => {
                                                         className="flex-1 sm:flex-none px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap"
                                                         style={{ 
                                                             border: '1px solid var(--border-subtle)',
-                                                            color: 'var(--text-muted)'
+                                                            color: 'var(--text-muted)',
+                                                            display: 'none'
                                                         }}
                                                     >
                                                         Add Images
@@ -701,7 +702,7 @@ export const AdminDashboard = () => {
                                             </div>
 
                                             {project.images && project.images.length > 0 && (
-                                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2" style={{ display: 'none' }}>
                                                     {project.images.map((img: any) => (
                                                         <img
                                                             key={img.id}

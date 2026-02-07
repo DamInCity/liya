@@ -5,6 +5,7 @@ interface Certification {
     url: string;
     filename: string;
     title?: string;
+    description?: string;
     uploadedAt: string;
 }
 
@@ -18,6 +19,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
     const [uploading, setUploading] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editTitle, setEditTitle] = useState('');
+    const [editDescription, setEditDescription] = useState('');
 
     useEffect(() => {
         loadCertifications();
@@ -98,7 +100,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
         }
     };
 
-    const handleUpdateTitle = async (id: string) => {
+    const handleUpdateCertification = async (id: string) => {
         try {
             const apiUrl = import.meta.env.VITE_API_URL || '/api';
             const response = await fetch(`${apiUrl}/certifications/${id}`, {
@@ -107,21 +109,22 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ title: editTitle })
+                body: JSON.stringify({ title: editTitle, description: editDescription })
             });
 
             if (response.ok) {
                 setCertifications(certifications.map(cert => 
-                    cert.id === id ? { ...cert, title: editTitle } : cert
+                    cert.id === id ? { ...cert, title: editTitle, description: editDescription } : cert
                 ));
                 setEditingId(null);
                 setEditTitle('');
+                setEditDescription('');
             } else {
-                alert('Failed to update title');
+                alert('Failed to update certification');
             }
         } catch (error) {
-            console.error('Error updating title:', error);
-            alert('Failed to update title');
+            console.error('Error updating certification:', error);
+            alert('Failed to update certification');
         }
     };
 
@@ -141,13 +144,12 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                 <form onSubmit={handleUpload} className="space-y-4">
                     <div>
                         <label className="block text-sm mb-2" style={{ color: 'var(--text-muted)' }}>
-                            Certification Image
+                            Certification Image (Optional)
                         </label>
                         <input 
                             name="image" 
                             type="file" 
                             accept="image/*"
-                            required
                             className="w-full p-3 rounded-lg border" 
                             style={{ 
                                 backgroundColor: 'var(--bg-main)', 
@@ -164,6 +166,22 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                             name="title" 
                             type="text" 
                             placeholder="e.g., Professional Modeling Certification"
+                            className="w-full p-3 rounded-lg border" 
+                            style={{ 
+                                backgroundColor: 'var(--bg-main)', 
+                                borderColor: 'var(--border-subtle)', 
+                                color: 'var(--text-primary)' 
+                            }} 
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm mb-2" style={{ color: 'var(--text-muted)' }}>
+                            Description (Optional)
+                        </label>
+                        <textarea 
+                            name="description" 
+                            rows={3}
+                            placeholder="Brief description of the certification..."
                             className="w-full p-3 rounded-lg border" 
                             style={{ 
                                 backgroundColor: 'var(--bg-main)', 
@@ -205,7 +223,8 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                             className="border rounded-lg overflow-hidden"
                             style={{ borderColor: 'var(--border-subtle)' }}
                         >
-                            <div className="aspect-[3/4] relative">
+                            {/* Image hidden */}
+                            <div className="aspect-[3/4] relative" style={{ display: 'none' }}>
                                 <img 
                                     src={`${backendUrl}${cert.url}`}
                                     alt={cert.title || 'Certification'}
@@ -227,9 +246,21 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                                                 color: 'var(--text-primary)' 
                                             }}
                                         />
+                                        <textarea
+                                            value={editDescription}
+                                            onChange={(e) => setEditDescription(e.target.value)}
+                                            placeholder="Enter description"
+                                            rows={3}
+                                            className="w-full p-2 rounded border text-sm"
+                                            style={{ 
+                                                backgroundColor: 'var(--bg-main)', 
+                                                borderColor: 'var(--border-subtle)', 
+                                                color: 'var(--text-primary)' 
+                                            }}
+                                        />
                                         <div className="flex gap-2">
                                             <button
-                                                onClick={() => handleUpdateTitle(cert.id)}
+                                                onClick={() => handleUpdateCertification(cert.id)}
                                                 className="px-3 py-1 rounded text-sm"
                                                 style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-main)' }}
                                             >
@@ -239,6 +270,7 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                                                 onClick={() => {
                                                     setEditingId(null);
                                                     setEditTitle('');
+                                                    setEditDescription('');
                                                 }}
                                                 className="px-3 py-1 rounded text-sm border"
                                                 style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
@@ -252,6 +284,11 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                                         <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                                             {cert.title || 'Untitled'}
                                         </p>
+                                        {cert.description && (
+                                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                                                {cert.description}
+                                            </p>
+                                        )}
                                         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                                             Uploaded: {new Date(cert.uploadedAt).toLocaleDateString()}
                                         </p>
@@ -260,11 +297,12 @@ export const CertificationsSection = ({ token }: CertificationsSectionProps) => 
                                                 onClick={() => {
                                                     setEditingId(cert.id);
                                                     setEditTitle(cert.title || '');
+                                                    setEditDescription(cert.description || '');
                                                 }}
                                                 className="px-3 py-1 rounded text-sm border"
                                                 style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}
                                             >
-                                                Edit Title
+                                                Edit
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(cert.id)}
