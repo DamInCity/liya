@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Lightbox } from '../ui/Lightbox';
 
 interface Certification {
     id: string;
@@ -14,8 +13,6 @@ interface Certification {
 export const Certifications = () => {
     const [certifications, setCertifications] = useState<Certification[]>([]);
     const [loading, setLoading] = useState(true);
-    const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
         const fetchCertifications = async () => {
@@ -44,23 +41,6 @@ export const Certifications = () => {
 
         fetchCertifications();
     }, []);
-
-    const handleImageClick = (index: number) => {
-        setCurrentImageIndex(index);
-        setLightboxOpen(true);
-    };
-
-    const handleCloseLightbox = () => {
-        setLightboxOpen(false);
-    };
-
-    const handleNextImage = () => {
-        setCurrentImageIndex((prev) => (prev + 1) % certifications.length);
-    };
-
-    const handlePrevImage = () => {
-        setCurrentImageIndex((prev) => (prev - 1 + certifications.length) % certifications.length);
-    };
 
     if (loading) {
         return (

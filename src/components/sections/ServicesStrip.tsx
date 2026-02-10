@@ -9,15 +9,8 @@ interface Specialty {
     icon?: string;
 }
 
-interface GalleryImage {
-    id: string;
-    url: string;
-    filename: string;
-}
-
 export const ServicesStrip = () => {
     const [specialties, setSpecialties] = useState<Specialty[]>([]);
-    const [galleryImages, setGalleryImages] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -26,21 +19,6 @@ export const ServicesStrip = () => {
                 // Fetch specialties
                 const specialtiesData = await getSpecialties();
                 setSpecialties(specialtiesData.specialties || []);
-
-                // Fetch gallery images for backgrounds
-                const apiUrl = import.meta.env.VITE_API_URL || '/api';
-                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
-                
-                const response = await fetch(`${apiUrl}/gallery/public`);
-                
-                if (response.ok) {
-                    const galleryData: GalleryImage[] = await response.json();
-                    if (galleryData && galleryData.length > 0) {
-                        // Map gallery images to URLs
-                        const imageUrls = galleryData.map(img => `${backendUrl}${img.url}`);
-                        setGalleryImages(imageUrls);
-                    }
-                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
