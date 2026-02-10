@@ -69,8 +69,15 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         await initializeDatabase();
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on http://localhost:${PORT}`);
+        const HOST = process.env.HOST || '0.0.0.0';
+        app.listen(PORT, HOST, () => {
+            const displayHost = HOST === '0.0.0.0' ? 'all interfaces' : HOST;
+            console.log(`🚀 Server running on ${displayHost}:${PORT}`);
+            if (process.env.NODE_ENV === 'production') {
+                console.log(`   Access via: ${process.env.PRODUCTION_URL || 'your domain'}`);
+            } else {
+                console.log(`   Local: http://localhost:${PORT}`);
+            }
             console.log(`📧 Email configured: ${process.env.EMAIL_USER || 'Not configured'}`);
         });
     } catch (error) {
