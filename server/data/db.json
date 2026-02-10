@@ -104,16 +104,7 @@
       "uploadedAt": "2026-02-02T11:57:17.007Z"
     }
   ],
-  "certifications": [
-    {
-      "id": "1770453157460",
-      "filename": "",
-      "url": "",
-      "title": "Professional Cert",
-      "description": "Certification",
-      "uploadedAt": "2026-02-07T08:32:37.460Z"
-    }
-  ],
+  "certifications": [],
   "adminCredentials": {
     "username": "Liya",
     "password": "Liyajj@251"
