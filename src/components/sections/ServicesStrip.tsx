@@ -49,7 +49,7 @@ export const ServicesStrip = () => {
                         className="mt-2 md:mt-0 font-label tracking-[0.2em] text-xs uppercase"
                         style={{ color: 'var(--text-muted)' }}
                     >
-                        What I Do Best
+                        {/* What I Do Best */}
                     </p>
                 </div>
 
