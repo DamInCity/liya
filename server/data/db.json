@@ -1,117 +1,352 @@
 {
   "images": [],
   "bio": {
-    "name": "Liya Dereji",
-    "title": "Professional Model · 3 Years Experience",
-    "description": "With 3 years of modeling experience and professional training, I specialize in runway, commercial work, acting, and model coordination. I bring creativity and reliability to every project.",
-    "location": "Addis Ababa, Ethiopia · Available for fashion shows, commercials, and creative projects."
+    "name": "Liya Dereje | Liya jj",
+    "title": "Professional Model · 3+ Years Experience",
+    "description": "A professional model experienced in runway, commercial, and on-camera work. I work with fashion designers, brands, and creative teams on campaigns, fashion presentations, and visual productions. Known for a confident presence and versatility, I bring preparation, creativity, and professionalism to every collaboration.\n\n",
+    "location": "."
   },
   "stats": {
     "languages": "English, Amharic",
-    "height": "1.75 m (5 ft 9 in)",
+    "height": "175 cm / 5'9 ",
     "weight": "56 kg",
     "bust": "32 in",
     "waist": "26 in",
     "hips": "38 in",
-    "shoeSize": "39",
+    "shoeSize": "39 EU",
     "hairColor": "Black",
-    "eyeColor": "Black",
-    "skinTone": "Dark tan / medium"
+    "eyeColor": "Brown",
+    "skinTone": "Dark Tan / Medium"
   },
   "specialties": [
     {
-      "id": "1770452917182",
+      "id": "1771183063655",
       "title": "Runway",
-      "description": "Runway to model",
+      "description": "Professional runway appearances for couture ateliers and fashion houses, delivering refined presentation.",
+      "icon": "👠",
+      "createdAt": "2026-02-15T19:17:43.655Z",
+      "updatedAt": "2026-02-15T19:22:26.395Z"
+    },
+    {
+      "id": "1771183137188",
+      "title": "Editorial",
+      "description": "Editorial and creative fashion imagery for magazines and luxury publications.",
       "icon": "",
-      "createdAt": "2026-02-07T08:28:37.182Z"
+      "createdAt": "2026-02-15T19:18:57.188Z",
+      "updatedAt": "2026-02-15T19:20:22.246Z"
+    },
+    {
+      "id": "1771183743824",
+      "title": "Commercials",
+      "description": "Professional brand campaigns and premium commercial advertising for diverse industries.",
+      "icon": "",
+      "createdAt": "2026-02-15T19:29:03.824Z"
+    },
+    {
+      "id": "1771184070578",
+      "title": "Digital & Catalog Modeling",
+      "description": "Product and catalog modeling reflecting style and personality for fashion and retail brands.",
+      "icon": "",
+      "createdAt": "2026-02-15T19:34:30.578Z",
+      "updatedAt": "2026-02-15T19:35:01.645Z"
+    },
+    {
+      "id": "1771184743156",
+      "title": "Lifestyle Ambassador",
+      "description": "Representing fashion and lifestyle brands with poise and presence while creating a strong brand impact.",
+      "icon": "",
+      "createdAt": "2026-02-15T19:45:43.156Z",
+      "updatedAt": "2026-02-15T19:52:53.784Z"
+    },
+    {
+      "id": "1771185319860",
+      "title": "Beauty & Skincare",
+      "description": "Bringing skincare, makeup, and hair campaigns to life with elegance, confidence, and engaging presence.",
+      "icon": "",
+      "createdAt": "2026-02-15T19:55:19.860Z",
+      "updatedAt": "2026-02-15T20:01:01.701Z"
+    },
+    {
+      "id": "1771185491921",
+      "title": "Music & Film",
+      "description": "Showcasing versatility and charisma in music videos, fashion films, and cinematic projects.",
+      "icon": "",
+      "createdAt": "2026-02-15T19:58:11.921Z"
+    },
+    {
+      "id": "1771185938316",
+      "title": "Events & Appearances",
+      "description": "Representing brands at events, launches, and industry gatherings with poise and refined presence.",
+      "icon": "",
+      "createdAt": "2026-02-15T20:05:38.316Z"
+    },
+    {
+      "id": "1771186150671",
+      "title": "Digital & Content",
+      "description": "Creating engaging content for businesses and brands through digital and social media campaigns.",
+      "icon": "",
+      "createdAt": "2026-02-15T20:09:10.671Z"
     }
   ],
   "projects": [
     {
-      "id": "1770453125848",
-      "title": "Environmentally fit",
-      "description": "Project description",
-      "category": "Environment",
+      "id": "1771192523384",
+      "title": "Fashion Shows & Runway",
+      "description": "Fashion Show",
+      "category": "Purpose Black Ethiopia",
       "tags": [],
       "link": "",
       "images": [],
-      "createdAt": "2026-02-07T08:32:05.848Z"
+      "createdAt": "2026-02-15T21:55:23.384Z",
+      "updatedAt": "2026-02-15T22:08:53.820Z"
+    },
+    {
+      "id": "1771192546724",
+      "title": "Fashion Shows & Runway",
+      "description": "Fashion Show",
+      "category": "Horra",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T21:55:46.724Z"
+    },
+    {
+      "id": "1771192575341",
+      "title": "Fashion Shows & Runway",
+      "description": "Fashion Show",
+      "category": "Raving Multimedia",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T21:56:15.341Z"
+    },
+    {
+      "id": "1771192804735",
+      "title": "Fashion Shows & Runway",
+      "description": "Runway Presentation",
+      "category": "Atmosphere Fashion Series",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:00:04.735Z"
+    },
+    {
+      "id": "1771193192748",
+      "title": "Fashion Shows & Runway",
+      "description": "Fashion Event",
+      "category": "Coffee Meets Leather",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:06:32.748Z",
+      "updatedAt": "2026-02-15T22:09:31.413Z"
+    },
+    {
+      "id": "1771193398172",
+      "title": "Fashion Shows & Runway",
+      "description": "Fashion & Cultural Event",
+      "category": "Chinese Bazaar",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:09:58.172Z"
+    },
+    {
+      "id": "1771193484038",
+      "title": "Commercials & Advertising",
+      "description": "TV Commercial",
+      "category": "Dachi Manufacturing",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:11:24.038Z"
+    },
+    {
+      "id": "1771193524735",
+      "title": "Commercials & Advertising",
+      "description": "TV Commercial",
+      "category": "Great Ethiopian Run",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:12:04.735Z"
+    },
+    {
+      "id": "1771193562373",
+      "title": "Commercials & Advertising",
+      "description": "TV Commercial",
+      "category": "Bangkok Beauty Studio",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:12:42.373Z"
+    },
+    {
+      "id": "1771193585516",
+      "title": "Commercials & Advertising",
+      "description": "TV Commercial",
+      "category": "Wegagen Bank",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:13:05.516Z"
+    },
+    {
+      "id": "1771193628439",
+      "title": "Commercials & Advertising",
+      "description": "Social Media Campaign",
+      "category": "Lomi Digital Marketing",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:13:48.439Z"
+    },
+    {
+      "id": "1771193671854",
+      "title": "Commercials & Advertising",
+      "description": "Clothing, product, and beauty brands",
+      "category": "Commercial Photo Shoots",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:14:31.854Z"
+    },
+    {
+      "id": "1771193761604",
+      "title": "Brand Ambassador & Promotional Work",
+      "description": "Interactive Brand Experience",
+      "category": "Diageo Ethiopia ",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:16:01.604Z"
+    },
+    {
+      "id": "1771193808353",
+      "title": "Brand Ambassador & Promotional Work",
+      "description": "Event Activation",
+      "category": "Heineken",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:16:48.353Z"
+    },
+    {
+      "id": "1771193832290",
+      "title": "Brand Ambassador & Promotional Work",
+      "description": "Event Activation",
+      "category": "Sofi Malt",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:17:12.290Z"
+    },
+    {
+      "id": "1771193856771",
+      "title": "Brand Ambassador & Promotional Work",
+      "description": "Brand Representation",
+      "category": "Saq Meda Events",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:17:36.771Z"
+    },
+    {
+      "id": "1771193933665",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations",
+      "category": "Eagle Hills Ethiopia",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:18:53.665Z"
+    },
+    {
+      "id": "1771193960532",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations",
+      "category": "Kegna Beverages",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:19:20.532Z"
+    },
+    {
+      "id": "1771193993227",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations",
+      "category": "Enkopa Summit",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:19:53.227Z"
+    },
+    {
+      "id": "1771194024352",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations",
+      "category": "Mintex 2024",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:20:24.352Z"
+    },
+    {
+      "id": "1771194058089",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations",
+      "category": "Buy Ethiopian Trade Week 2025",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:20:58.089Z"
+    },
+    {
+      "id": "1771194093082",
+      "title": "Events, Ushering & Welcoming",
+      "description": "Guest Relations & Event Support",
+      "category": "Entertainment & Corporate Events",
+      "tags": [],
+      "link": "",
+      "images": [],
+      "createdAt": "2026-02-15T22:21:33.082Z"
     }
   ],
   "gallery": [
     {
-      "id": "177002376752393pxfkl5q",
-      "filename": "gallery-1770023767511-843683956.JPG",
-      "originalName": "IMG_5788.JPG",
-      "url": "/uploads/gallery/gallery-1770023767511-843683956.JPG",
-      "uploadedAt": "2026-02-02T09:16:07.523Z"
-    },
-    {
-      "id": "17700237749590aly3q6s4",
-      "filename": "gallery-1770023774915-898402071.PNG",
-      "originalName": "IMG_5800.PNG",
-      "url": "/uploads/gallery/gallery-1770023774915-898402071.PNG",
-      "uploadedAt": "2026-02-02T09:16:14.959Z"
-    },
-    {
-      "id": "1770023898628efvfogndo",
-      "filename": "gallery-1770023877202-688822239.webp",
-      "originalName": "IMG_5779.PNG",
-      "url": "/uploads/gallery/gallery-1770023877202-688822239.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770023898629w8ekc7oyy",
-      "filename": "gallery-1770023877209-668211063.webp",
-      "originalName": "IMG_5786.JPG",
-      "url": "/uploads/gallery/gallery-1770023877209-668211063.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770023898629o91x05f12",
-      "filename": "gallery-1770023877210-848834605.webp",
-      "originalName": "IMG_5789.JPG",
-      "url": "/uploads/gallery/gallery-1770023877210-848834605.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770023898629xdt38tsln",
-      "filename": "gallery-1770023877213-457102183.webp",
-      "originalName": "IMG_5795.JPG",
-      "url": "/uploads/gallery/gallery-1770023877213-457102183.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770023898629coyus90s4",
-      "filename": "gallery-1770023877316-528652450.webp",
-      "originalName": "IMG_5801.PNG",
-      "url": "/uploads/gallery/gallery-1770023877316-528652450.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770023898629rah67f4ll",
-      "filename": "gallery-1770023877318-208755347.webp",
-      "originalName": "IMG_5810.PNG",
-      "url": "/uploads/gallery/gallery-1770023877318-208755347.webp",
-      "uploadedAt": "2026-02-02T09:18:18.629Z"
-    },
-    {
-      "id": "1770033437007zfu4aehbq",
-      "filename": "gallery-1770033436228-936080555.webp",
-      "originalName": "IMG_5798.PNG",
-      "url": "/uploads/gallery/gallery-1770033436228-936080555.webp",
-      "uploadedAt": "2026-02-02T11:57:17.007Z"
-    },
-    {
-      "id": "1770033437007zfu4aehbo",
-      "filename": "gallery-1770033436228-936080555.webp",
-      "originalName": "IMG_5798.PNG",
-      "url": "/uploads/gallery/gallery-1770033436228-936080555.webp",
-      "uploadedAt": "2026-02-02T11:57:17.007Z"
+      "id": "17713243531602ra64mmxo",
+      "filename": "gallery-1771324352489-832314009.webp",
+      "originalName": "IMG_5792.PNG",
+      "url": "/uploads/gallery/gallery-1771324352489-832314009.webp",
+      "uploadedAt": "2026-02-17T10:32:33.160Z"
     }
   ],
-  "certifications": [],
+  "certifications": [
+    {
+      "id": "1771181286501",
+      "filename": "cert-1771181285920-158484882.webp",
+      "url": "/uploads/certifications/cert-1771181285920-158484882.webp",
+      "title": "Certificate of Completion - Modeling Training ",
+      "description": "Successfully completed professional modeling training, covering runway and commercial/photo modeling. ",
+      "uploadedAt": "2026-02-15T18:48:06.501Z"
+    },
+    {
+      "id": "1771182147888",
+      "filename": "cert-1771182147535-584543779.webp",
+      "url": "/uploads/certifications/cert-1771182147535-584543779.webp",
+      "title": "Certificate of Program Completion - SMMA",
+      "description": "Completed Social Media Marketing Agency ( SMMA ) program, gaining skills in brand promotion, digital marketing, and social media strategy. ",
+      "uploadedAt": "2026-02-15T19:02:27.888Z"
+    },
+    {
+      "id": "1771183301212",
+      "filename": "cert-1771183300789-11731871.webp",
+      "url": "/uploads/certifications/cert-1771183300789-11731871.webp",
+      "title": "Certificate of Appreciation - Fashion Series ",
+      "description": "In recognition of a valuable participation as a model in the Fashion Series. ",
+      "uploadedAt": "2026-02-15T19:21:41.212Z"
+    }
+  ],
   "adminCredentials": {
     "username": "Liya",
     "password": "Liyajj@251"
