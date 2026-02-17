@@ -47,7 +47,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
     return (
         <>
             <section
-                className="min-h-[85vh] w-full snap-start flex items-center justify-center relative overflow-hidden border-b py-8 md:py-12"
+                className="w-full snap-start flex items-start justify-center relative overflow-hidden border-b py-5"
                 style={{ scrollSnapAlign: 'start', backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)' }}
             >
                 {/* Background Glow */}
@@ -120,20 +120,20 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
                             Project {String(index + 1).padStart(2, '0')}
                         </span>
                         <h3 
-                            className="text-2xl sm:text-3xl lg:text-4xl font-normal mb-2 leading-tight italic" 
+                            className="text-2xl sm:text-3xl lg:text-4xl font-normal mb-1 leading-tight italic" 
                             style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}
                         >
                             {portfolio.title}
                         </h3>
-                        <p className="text-sm sm:text-base mb-6 uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>
+                        <p className="text-sm sm:text-base mb-2 uppercase tracking-[0.15em]" style={{ color: 'var(--text-muted)' }}>
                             {portfolio.category}
                         </p>
-                        <div className="w-16 h-px mb-6" style={{ backgroundColor: 'var(--accent)' }} />
-                        <p className="leading-relaxed max-w-md text-base sm:text-lg mb-6 font-light" style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+                        <div className="w-16 h-px mb-3" style={{ backgroundColor: 'var(--accent)' }} />
+                        <p className="leading-relaxed max-w-md text-base sm:text-lg mb-4 font-light" style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
                             {portfolio.description}
                         </p>
                         {portfolio.tags && portfolio.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mb-6">
+                            <div className="flex flex-wrap gap-2 mb-4">
                                 {portfolio.tags.map((tag, i) => (
                                     <span
                                         key={i}
