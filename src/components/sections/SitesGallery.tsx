@@ -47,7 +47,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
     return (
         <>
             <section
-                className="min-h-screen w-full snap-start flex items-center justify-center relative overflow-hidden border-b py-12 md:py-24"
+                className="min-h-[85vh] w-full snap-start flex items-center justify-center relative overflow-hidden border-b py-8 md:py-12"
                 style={{ scrollSnapAlign: 'start', backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)' }}
             >
                 {/* Background Glow */}
