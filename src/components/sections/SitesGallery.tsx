@@ -301,7 +301,7 @@ export const SitesGallery = () => {
                     </button>
 
                     {/* Page Indicator */}
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}>
                         {projects.map((_, i) => (
                             <button
                                 key={i}
