@@ -13,12 +13,16 @@ export const GallerySection = () => {
     const [images, setImages] = useState<GalleryImage[]>([]);
     const [uploading, setUploading] = useState(false);
     const [selectedImages, setSelectedImages] = useState<Set<string>>(new Set());
+    const [stackedImages, setStackedImages] = useState<GalleryImage[]>([]);
+    const [stackedUploading, setStackedUploading] = useState(false);
+    const [selectedStackedImages, setSelectedStackedImages] = useState<Set<string>>(new Set());
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
     const apiUrl = import.meta.env.VITE_API_URL || '/api';
 
     useEffect(() => {
         fetchGalleryImages();
+        fetchStackedGalleryImages();
     }, []);
 
     const fetchGalleryImages = async () => {
@@ -38,6 +42,21 @@ export const GallerySection = () => {
             }
         } catch (error) {
             console.error('Error fetching gallery images:', error);
+        }
+    };
+
+    const fetchStackedGalleryImages = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/gallery/stacked`);
+
+            if (response.ok) {
+                const data = await response.json();
+                setStackedImages(data);
+            } else {
+                console.error('Failed to fetch stacked gallery images');
+            }
+        } catch (error) {
+            console.error('Error fetching stacked gallery images:', error);
         }
     };
 
@@ -119,7 +138,84 @@ export const GallerySection = () => {
             setSelectedImages(new Set(images.map(img => img.id)));
         }
     };
+    const handleStackedUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
 
+        setStackedUploading(true);
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            const formData = new FormData();
+            
+            Array.from(files).forEach(file => {
+                formData.append('images', file);
+            });
+
+            const response = await fetch(`${apiUrl}/gallery/stacked/upload`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const uploadedImages = await response.json();
+                setStackedImages(prev => [...uploadedImages, ...prev]);
+            } else {
+                console.error('Stacked upload failed');
+            }
+        } catch (error) {
+            console.error('Error uploading stacked images:', error);
+        } finally {
+            setStackedUploading(false);
+        }
+    };
+
+    const handleStackedDelete = async () => {
+        if (selectedStackedImages.size === 0) return;
+
+        if (!confirm(`Delete ${selectedStackedImages.size} selected stacked image(s)?`)) return;
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            const deletePromises = Array.from(selectedStackedImages).map(id =>
+                fetch(`${apiUrl}/gallery/stacked/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+            );
+
+            await Promise.all(deletePromises);
+            setStackedImages(prev => prev.filter(img => !selectedStackedImages.has(img.id)));
+            setSelectedStackedImages(new Set());
+        } catch (error) {
+            console.error('Error deleting stacked images:', error);
+        }
+    };
+
+    const toggleStackedImage = (id: string) => {
+        setSelectedStackedImages(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(id)) {
+                newSet.delete(id);
+            } else {
+                newSet.add(id);
+            }
+            return newSet;
+        });
+    };
+
+    const toggleSelectAllStacked = () => {
+        if (selectedStackedImages.size === stackedImages.length) {
+            setSelectedStackedImages(new Set());
+        } else {
+            setSelectedStackedImages(new Set(stackedImages.map(img => img.id)));
+        }
+    };
     return (
         <div className="space-y-6">
             {/* Header */}
@@ -300,6 +396,187 @@ export const GallerySection = () => {
                                             </svg>
                                         )}
                                     </div>
+                                </div>
+
+                                {/* Image Info */}
+                                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <p className="text-xs text-white truncate">
+                                        {image.originalName}
+                                    </p>
+                                    <p className="text-[10px] text-white/70">
+                                        {new Date(image.uploadedAt).toLocaleDateString()}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* Stacked Gallery Section */}
+            <div className="mt-12 pt-12 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
+                <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Stacked Gallery (Featured Work Section)
+                </h3>
+                <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+                    Images uploaded here will appear in the traditional stacked grid below the flower gallery
+                </p>
+
+                {/* Upload Section */}
+                <div
+                    className="border-2 border-dashed rounded-lg p-8 text-center mb-6"
+                    style={{ borderColor: 'var(--border-subtle)' }}
+                >
+                    <input
+                        type="file"
+                        id="stacked-upload"
+                        accept="image/*"
+                        multiple
+                        onChange={handleStackedUpload}
+                        disabled={stackedUploading}
+                        className="hidden"
+                    />
+                    <label
+                        htmlFor="stacked-upload"
+                        className="cursor-pointer inline-flex flex-col items-center"
+                    >
+                        <svg
+                            className="w-12 h-12 mb-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            style={{ color: 'var(--text-muted)' }}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            />
+                        </svg>
+                        <span
+                            className="text-lg font-bold mb-2"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            {stackedUploading ? 'Uploading...' : 'Click to upload stacked gallery images'}
+                        </span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                            Select multiple images (PNG, JPG, WebP)
+                        </span>
+                    </label>
+                </div>
+
+                {/* Gallery Actions */}
+                {stackedImages.length > 0 && (
+                    <div className="flex flex-wrap gap-4 mb-6">
+                        {selectedStackedImages.size > 0 && (
+                            <button
+                                onClick={handleStackedDelete}
+                                className="px-4 py-2 rounded-lg font-bold transition-colors"
+                                style={{
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    color: '#ef4444',
+                                    border: '1px solid rgba(239, 68, 68, 0.3)'
+                                }}
+                            >
+                                Delete ({selectedStackedImages.size})
+                            </button>
+                        )}
+                        <button
+                            onClick={toggleSelectAllStacked}
+                            className="px-4 py-2 rounded-lg font-bold transition-colors"
+                            style={{
+                                backgroundColor: 'var(--bg-elevated)',
+                                color: 'var(--text-muted)',
+                                border: '1px solid var(--border-subtle)'
+                            }}
+                        >
+                            {selectedStackedImages.size === stackedImages.length ? 'Deselect All' : 'Select All'}
+                        </button>
+                    </div>
+                )}
+
+                {/* Image Stats */}
+                <div className="mb-6 flex flex-wrap gap-4">
+                    <div
+                        className="px-4 py-2 rounded-lg"
+                        style={{
+                            backgroundColor: 'var(--bg-elevated)',
+                            border: '1px solid var(--border-subtle)'
+                        }}
+                    >
+                        <span className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                            {stackedImages.length}
+                        </span>
+                        <span className="ml-2" style={{ color: 'var(--text-muted)' }}>
+                            Stacked Images
+                        </span>
+                    </div>
+                    {selectedStackedImages.size > 0 && (
+                        <div
+                            className="px-4 py-2 rounded-lg"
+                            style={{
+                                backgroundColor: 'var(--accent)',
+                                color: 'var(--bg-main)'
+                            }}
+                        >
+                            <span className="font-bold">
+                                {selectedStackedImages.size}
+                            </span>
+                            <span className="ml-2">
+                                Selected
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Image Grid */}
+                {stackedImages.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        {stackedImages.map((image, index) => (
+                            <motion.div
+                                key={image.id}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: index * 0.05 }}
+                                className="relative group aspect-[3/4] rounded-lg overflow-hidden cursor-pointer"
+                                onClick={() => toggleStackedImage(image.id)}
+                                style={{
+                                    border: selectedStackedImages.has(image.id)
+                                        ? '3px solid var(--accent)'
+                                        : '1px solid var(--border-subtle)'
+                                }}
+                            >
+                                <img
+                                    src={`${backendUrl}${image.url}`}
+                                    alt={image.originalName}
+                                    className="w-full h-full object-cover"
+                                />
+
+                                {/* Selection Checkbox */}
+                                <div
+                                    className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center transition-all"
+                                    style={{
+                                        backgroundColor: selectedStackedImages.has(image.id)
+                                            ? 'var(--accent)'
+                                            : 'rgba(255, 255, 255, 0.3)'
+                                    }}
+                                >
+                                    {selectedStackedImages.has(image.id) && (
+                                        <svg
+                                            className="w-4 h-4"
+                                            fill="none"
+                                            stroke="white"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={3}
+                                                d="M5 13l4 4L19 7"
+                                            />
+                                        </svg>
+                                    )}
                                 </div>
 
                                 {/* Image Info */}

@@ -19,26 +19,28 @@ export const getSpecialties = async () => {
 };
 
 export const createSpecialty = async (data: any, token: string) => {
+    const isFormData = data instanceof FormData;
     const response = await fetch(`${API_BASE_URL}/specialties`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(data),
+        body: isFormData ? data : JSON.stringify(data),
     });
     if (!response.ok) throw new Error('Failed to create specialty');
     return response.json();
 };
 
 export const updateSpecialty = async (id: string, data: any, token: string) => {
+    const isFormData = data instanceof FormData;
     const response = await fetch(`${API_BASE_URL}/specialties/${id}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(data),
+        body: isFormData ? data : JSON.stringify(data),
     });
     if (!response.ok) throw new Error('Failed to update specialty');
     return response.json();

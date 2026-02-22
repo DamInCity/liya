@@ -7,6 +7,7 @@ interface Specialty {
     title: string;
     description: string;
     icon?: string;
+    backgroundImage?: string;
 }
 
 export const ServicesStrip = () => {
@@ -73,17 +74,25 @@ export const ServicesStrip = () => {
                                 }}
                                 data-cursor="link"
                             >
+                                {/* Background Image */}
+                                {specialty.backgroundImage && (
+                                    <div 
+                                        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-500 group-hover:scale-110"
+                                        style={{
+                                            backgroundImage: `url(${import.meta.env.VITE_BACKEND_URL || ''}${specialty.backgroundImage})`,
+                                            opacity: 0.3
+                                        }}
+                                    />
+                                )}
+
                                 {/* Accent Color Overlay */}
                                 <div 
                                     className="absolute inset-0 z-0 transition-opacity duration-500 group-hover:opacity-20"
                                     style={{
-                                        background: `
-                                            linear-gradient(135deg, 
-                                                rgba(162, 89, 255, 0.15) 0%, 
-                                                rgba(200, 150, 255, 0.1) 100%
-                                            )
-                                        `,
-                                        opacity: 0.15
+                                        background: specialty.backgroundImage 
+                                            ? 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)'
+                                            : `linear-gradient(135deg, rgba(162, 89, 255, 0.15) 0%, rgba(200, 150, 255, 0.1) 100%)`,
+                                        opacity: specialty.backgroundImage ? 0.8 : 0.15
                                     }}
                                 />
 

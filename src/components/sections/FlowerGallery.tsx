@@ -37,6 +37,8 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
     const [loading, setLoading] = useState(true);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [stackedImages, setStackedImages] = useState<string[]>([]);
+    const [stackedLoading, setStackedLoading] = useState(true);
 
     useEffect(() => {
         const fetchGalleryImages = async () => {
@@ -68,6 +70,32 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
             }
         };
 
+        const fetchStackedImages = async () => {
+            try {
+                const apiUrl = import.meta.env.VITE_API_URL || '/api';
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+                
+                const response = await fetch(`${apiUrl}/gallery/stacked`);
+                
+                if (response.ok) {
+                    const stackedData = await response.json();
+                    if (stackedData && stackedData.length > 0) {
+                        const imageUrls = stackedData.map((img: FlowerImage) => `${backendUrl}${img.url}`);
+                        setStackedImages(imageUrls);
+                    } else {
+                        setStackedImages([]);
+                    }
+                } else {
+                    setStackedImages([]);
+                }
+            } catch (error) {
+                console.error('Error fetching stacked images:', error);
+                setStackedImages([]);
+            } finally {
+                setStackedLoading(false);
+            }
+        };
+
         // If images passed as props, use them
         if (propImages && propImages.length > 0) {
             const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
@@ -77,6 +105,9 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
             // Fetch from gallery API
             fetchGalleryImages();
         }
+
+        // Always fetch stacked images
+        fetchStackedImages();
     }, [propImages]);
 
     if (loading) {
@@ -280,12 +311,59 @@ export const FlowerGallery = ({ images: propImages }: FlowerGalleryProps) => {
                 >
                     Click to view · Hover to explore
                 </motion.p>
+
+                {/* Stacked Gallery Section */}
+                {!stackedLoading && stackedImages.length > 0 && (
+                    <div className="mt-24 md:mt-32">
+                        <motion.div
+                            className="text-center mb-12"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <h3
+                                className="text-2xl sm:text-3xl md:text-4xl font-normal italic mb-4"
+                                style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}
+                            >
+                                Featured Work
+                            </h3>
+                            <div className="w-16 h-px mx-auto" style={{ backgroundColor: 'var(--accent)' }} />
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {stackedImages.map((image, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                                    className="group cursor-pointer relative overflow-hidden rounded-lg aspect-[3/4]"
+                                    onClick={() => {
+                                        setCurrentImageIndex(flowerImages.length + index);
+                                        setLightboxOpen(true);
+                                    }}
+                                >
+                                    <img
+                                        src={image}
+                                        alt={`Featured work ${index + 1}`}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div
+                                        className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    />
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Lightbox */}
             {lightboxOpen && (
                 <Lightbox
-                    images={flowerImages}
+                    images={[...flowerImages, ...stackedImages]}
                     currentIndex={currentImageIndex}
                     onClose={handleCloseLightbox}
                     onNext={handleNextImage}

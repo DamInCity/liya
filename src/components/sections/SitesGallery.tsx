@@ -19,7 +19,7 @@ interface Project {
     images: ProjectImage[];
 }
 
-const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number }) => {
+const PortfolioCard = ({ portfolio }: { portfolio: Project }) => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -117,7 +117,7 @@ const PortfolioCard = ({ portfolio, index }: { portfolio: Project; index: number
                         transition={{ duration: 0.6 }}
                     >
                         <span className="font-label tracking-[0.3em] text-xs mb-4 uppercase" style={{ color: accent }}>
-                            Project {String(index + 1).padStart(2, '0')}
+                            {portfolio.category}
                         </span>
                         <h3 
                             className="text-2xl sm:text-3xl lg:text-4xl font-normal mb-1 leading-tight italic" 
@@ -259,9 +259,9 @@ export const SitesGallery = () => {
                     #sites::-webkit-scrollbar { display: none; }
                 `}</style>
                 <div className="flex">
-                    {projects.map((portfolio, i) => (
+                    {projects.map((portfolio) => (
                         <div key={portfolio.id} className="min-w-full snap-center">
-                            <PortfolioCard portfolio={portfolio} index={i} />
+                            <PortfolioCard portfolio={portfolio} />
                         </div>
                     ))}
                 </div>

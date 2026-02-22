@@ -66,6 +66,22 @@ router.get('/public', async (req, res) => {
     }
 });
 
+// GET stacked gallery images (public endpoint)
+router.get('/stacked', async (req, res) => {
+    try {
+        const db = await readData();
+        const stackedGallery = db.stackedGallery || [];
+        
+        // Sort by upload date, newest first
+        stackedGallery.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+        
+        res.json(stackedGallery);
+    } catch (error) {
+        console.error('Error fetching stacked gallery:', error);
+        res.status(500).json({ error: 'Failed to fetch stacked gallery images' });
+    }
+});
+
 // GET all gallery images (admin endpoint)
 router.get('/', verifyToken, async (req, res) => {
     try {
@@ -177,6 +193,82 @@ router.get('/stats', verifyToken, async (req, res) => {
     } catch (error) {
         console.error('Error fetching stats:', error);
         res.status(500).json({ error: 'Failed to fetch stats' });
+    }
+});
+
+// POST upload images to stacked gallery
+router.post('/stacked/upload', 
+    verifyToken, 
+    upload.array('images', 20),
+    optimizeUploadedImage(galleryOptimizeOptions),
+    async (req, res) => {
+    try {
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({ error: 'No files uploaded' });
+        }
+
+        const db = await readData();
+        if (!db.stackedGallery) {
+            db.stackedGallery = [];
+        }
+
+        const uploadedImages = [];
+
+        for (const file of req.files) {
+            // File is already optimized and converted to webp by middleware
+            const imageData = {
+                id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                filename: file.filename,
+                originalName: file.originalname,
+                url: `/uploads/gallery/${file.filename}`,
+                uploadedAt: new Date().toISOString()
+            };
+
+            db.stackedGallery.push(imageData);
+            uploadedImages.push(imageData);
+        }
+
+        await writeData(db);
+
+        res.json(uploadedImages);
+    } catch (error) {
+        console.error('Error uploading stacked images:', error);
+        res.status(500).json({ error: 'Failed to upload stacked images' });
+    }
+});
+
+// DELETE stacked gallery image
+router.delete('/stacked/:id', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const db = await readData();
+
+        if (!db.stackedGallery) {
+            return res.status(404).json({ error: 'Stacked gallery not found' });
+        }
+
+        const imageIndex = db.stackedGallery.findIndex(img => img.id === id);
+        
+        if (imageIndex === -1) {
+            return res.status(404).json({ error: 'Image not found' });
+        }
+
+        const image = db.stackedGallery[imageIndex];
+
+        // Delete the physical file
+        const filePath = join(__dirname, '../uploads/gallery', image.filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        // Remove from database
+        db.stackedGallery.splice(imageIndex, 1);
+        await writeData(db);
+
+        res.json({ message: 'Stacked image deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting stacked image:', error);
+        res.status(500).json({ error: 'Failed to delete stacked image' });
     }
 });
 

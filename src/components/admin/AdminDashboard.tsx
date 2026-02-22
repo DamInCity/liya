@@ -119,13 +119,21 @@ export const AdminDashboard = () => {
         const formData = new FormData(form);
         
         try {
-            const result = await createSpecialty({
-                title: formData.get('title'),
-                description: formData.get('description'),
-                icon: formData.get('icon')
-            }, token);
+            // If there's a background image, use FormData directly
+            const backgroundImageFile = formData.get('backgroundImage') as File;
+            if (backgroundImageFile && backgroundImageFile.size > 0) {
+                const result = await createSpecialty(formData, token);
+                setSpecialties([...specialties, result.specialty]);
+            } else {
+                // Otherwise, send JSON
+                const result = await createSpecialty({
+                    title: formData.get('title'),
+                    description: formData.get('description'),
+                    icon: formData.get('icon')
+                }, token);
+                setSpecialties([...specialties, result.specialty]);
+            }
             
-            setSpecialties([...specialties, result.specialty]);
             setShowAddSpecialty(false);
             form.reset();
         } catch (error) {
@@ -139,13 +147,21 @@ export const AdminDashboard = () => {
         const formData = new FormData(form);
         
         try {
-            const result = await updateSpecialty(editingSpecialty.id, {
-                title: formData.get('title'),
-                description: formData.get('description'),
-                icon: formData.get('icon')
-            }, token);
+            // If there's a new background image, use FormData directly
+            const backgroundImageFile = formData.get('backgroundImage') as File;
+            if (backgroundImageFile && backgroundImageFile.size > 0) {
+                const result = await updateSpecialty(editingSpecialty.id, formData, token);
+                setSpecialties(specialties.map(s => s.id === editingSpecialty.id ? result.specialty : s));
+            } else {
+                // Otherwise, send JSON
+                const result = await updateSpecialty(editingSpecialty.id, {
+                    title: formData.get('title'),
+                    description: formData.get('description'),
+                    icon: formData.get('icon')
+                }, token);
+                setSpecialties(specialties.map(s => s.id === editingSpecialty.id ? result.specialty : s));
+            }
             
-            setSpecialties(specialties.map(s => s.id === editingSpecialty.id ? result.specialty : s));
             setEditingSpecialty(null);
         } catch (error) {
             alert('Failed to update specialty');
@@ -432,6 +448,11 @@ export const AdminDashboard = () => {
                                         <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Description *</label>
                                         <textarea name="description" required rows={3} className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
                                     </div>
+                                    <div>
+                                        <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Background Image</label>
+                                        <input name="backgroundImage" type="file" accept="image/*" className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
+                                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Optional: Upload a background image for this specialty card</p>
+                                    </div>
                                     <button type="submit" className="w-full py-3 rounded-lg font-bold" style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-main)' }}>Create Specialty</button>
                                 </div>
                             </form>
@@ -461,6 +482,17 @@ export const AdminDashboard = () => {
                                                 <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Description *</label>
                                                 <textarea name="description" defaultValue={specialty.description} required rows={3} className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
                                             </div>
+                                            <div>
+                                                <label className="block text-sm font-bold mb-2" style={{ color: 'var(--text-muted)' }}>Background Image</label>
+                                                {specialty.backgroundImage && (
+                                                    <div className="mb-2">
+                                                        <img src={`${import.meta.env.VITE_BACKEND_URL || ''}${specialty.backgroundImage}`} alt="Current background" className="w-32 h-32 object-cover rounded" />
+                                                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Current background image</p>
+                                                    </div>
+                                                )}
+                                                <input name="backgroundImage" type="file" accept="image/*" className="w-full p-3 rounded-lg border" style={{ backgroundColor: 'var(--bg-main)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }} />
+                                                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Optional: Upload a new background image</p>
+                                            </div>
                                             <div className="flex gap-2">
                                                 <button type="submit" className="flex-1 py-2 rounded-lg font-bold" style={{ backgroundColor: 'var(--accent)', color: 'var(--bg-main)' }}>Save</button>
                                                 <button type="button" onClick={() => setEditingSpecialty(null)} className="flex-1 py-2 rounded-lg font-bold" style={{ border: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>Cancel</button>
@@ -469,7 +501,7 @@ export const AdminDashboard = () => {
                                     ) : (
                                         <>
                                             <div className="flex justify-between items-start">
-                                                <div>
+                                                <div className="flex-1">
                                                     <div className="flex items-center gap-3 mb-2">
                                                         {specialty.icon && <span className="text-2xl">{specialty.icon}</span>}
                                                         <h3 
@@ -482,8 +514,14 @@ export const AdminDashboard = () => {
                                                     <p style={{ color: 'var(--text-muted)' }}>
                                                         {specialty.description}
                                                     </p>
+                                                    {specialty.backgroundImage && (
+                                                        <div className="mt-3">
+                                                            <img src={`${import.meta.env.VITE_BACKEND_URL || ''}${specialty.backgroundImage}`} alt="Background" className="w-24 h-24 object-cover rounded" />
+                                                            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Background image</p>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <div className="flex gap-2">
+                                                <div className="flex gap-2 ml-4">
                                                     <button
                                                         onClick={() => setEditingSpecialty(specialty)}
                                                         className="px-3 py-1 rounded text-sm"

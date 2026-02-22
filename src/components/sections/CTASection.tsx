@@ -54,9 +54,9 @@ export const CTASection = () => {
                             style={{ backgroundColor: 'var(--surface-glass)' }}
                         />
 
-                        <div className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-20">
+                        <div className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-20 items-start">
                             {/* Left: Copy */}
-                            <div>
+                            <div className="flex flex-col">
                                 <span
                                     className="font-label tracking-[0.3em] text-xs uppercase mb-4 sm:mb-6 block"
                                     style={{ color: 'var(--accent)' }}
@@ -70,12 +70,18 @@ export const CTASection = () => {
                                     Let's Work Together
                                 </h2>
                                 <p
+                                    className="text-base md:text-lg leading-relaxed mb-4"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    I'm available for fashion shows, editorial shoots, commercials, brand campaigns, and event appearances worldwide.
+                                </p>
+                                <p
                                     className="text-base md:text-lg leading-relaxed mb-6 md:mb-8"
                                     style={{ color: 'var(--text-muted)' }}
                                 >
-                                    Available for fashion shows, editorial shoots, commercial campaigns, and brand collaborations worldwide. Reach out via WhatsApp or the form below.
+                                    Use the form or WhatsApp link below to discuss your project, dates, and requirements. For bookings and serious enquiries only.
                                 </p>
-                                <div className="flex items-center gap-4 text-sm" style={{ color: 'var(--text-muted)' }}>
+                                <div className="flex items-center gap-4 text-sm mb-0" style={{ color: 'var(--text-muted)' }}>
                                     <div className="flex -space-x-2">
                                         {galleryImages.length > 0 ? (
                                             galleryImages.map((img, idx) => {
@@ -98,22 +104,28 @@ export const CTASection = () => {
                                             </>
                                         )}
                                     </div>
-                                    <span>Trusted by international brands</span>
+                                    <span>Trusted by: Wegagen Bank, Heineken, Diageo Ethiopia, Great Ethiopian Run, Eagle Hills Ethiopia…</span>
                                 </div>
                             </div>
 
                             {/* Right: Contact Section */}
-                            <div className="space-y-4">
-                                <div className="space-y-6">
-                                    <p
-                                        className="text-base md:text-lg leading-relaxed"
-                                        style={{ color: 'var(--text-muted)' }}
+                            <div className="space-y-4 flex flex-col justify-start">
+                                <div className="space-y-4">
+                                    <a
+                                        href="#sites"
+                                        className="block w-full font-bold py-3 md:py-4 rounded-lg transition-all duration-300 hover:shadow-lg text-sm md:text-base text-center border"
+                                        style={{
+                                            backgroundColor: 'transparent',
+                                            color: 'var(--accent)',
+                                            borderColor: 'var(--accent)'
+                                        }}
+                                        data-cursor="link"
                                     >
-                                        Ready to collaborate? Click below to send me an email and let's discuss your project.
-                                    </p>
+                                        View Portfolio
+                                    </a>
 
                                     <a
-                                        href="mailto:contact@liya.com?subject=Let's Work Together&body=Hi Liya,%0D%0A%0D%0AI would like to discuss a collaboration opportunity with you.%0D%0A%0D%0AProject Details:%0D%0A%0D%0A%0D%0ABest regards,"
+                                        href="mailto:contact@liya.com?subject=Campaign Booking Request&body=Hi Liya,%0D%0A%0D%0AI would like to book you for an upcoming campaign.%0D%0A%0D%0AProject Details:%0D%0AType:%0D%0ADates:%0D%0ALocation:%0D%0A%0D%0ABest regards,"
                                         className="block w-full font-bold py-3 md:py-4 rounded-lg transition-shadow duration-300 hover:shadow-lg text-sm md:text-base text-center"
                                         style={{
                                             backgroundColor: 'var(--accent)',
@@ -121,7 +133,7 @@ export const CTASection = () => {
                                         }}
                                         data-cursor="cta"
                                     >
-                                        Send Email
+                                        Book Me for Your Next Campaign
                                     </a>
 
                                     <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
