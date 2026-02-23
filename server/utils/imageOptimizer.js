@@ -30,9 +30,12 @@ export async function optimizeImage(inputPath, outputPath = null, options = {}) 
         // Get image metadata
         const metadata = await sharp(inputPath).metadata();
         
+        // EXIF orientations 5-8 involve a 90°/270° rotation that swaps width and height
+        const swapDimensions = metadata.orientation >= 5 && metadata.orientation <= 8;
+
         // Calculate resize dimensions while maintaining aspect ratio
-        let width = metadata.width;
-        let height = metadata.height;
+        let width = swapDimensions ? metadata.height : metadata.width;
+        let height = swapDimensions ? metadata.width : metadata.height;
 
         if (width > maxWidth || height > maxHeight) {
             const widthRatio = maxWidth / width;
@@ -51,6 +54,7 @@ export async function optimizeImage(inputPath, outputPath = null, options = {}) 
         // Compress until under maxSizeKB
         do {
             outputBuffer = await sharp(inputPath)
+                .rotate() // Auto-correct EXIF orientation
                 .resize(width, height, {
                     fit: 'inside',
                     withoutEnlargement: true

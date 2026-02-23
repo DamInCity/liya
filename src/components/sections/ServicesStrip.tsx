@@ -87,12 +87,12 @@ export const ServicesStrip = () => {
 
                                 {/* Accent Color Overlay */}
                                 <div 
-                                    className="absolute inset-0 z-0 transition-opacity duration-500 group-hover:opacity-20"
+                                    className="absolute inset-0 z-0 transition-opacity duration-500 group-hover:opacity-30"
                                     style={{
                                         background: specialty.backgroundImage 
-                                            ? 'linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%)'
+                                            ? 'linear-gradient(135deg, rgba(162, 89, 255, 0.65) 0%, rgba(100, 40, 180, 0.15) 100%)'
                                             : `linear-gradient(135deg, rgba(162, 89, 255, 0.15) 0%, rgba(200, 150, 255, 0.1) 100%)`,
-                                        opacity: specialty.backgroundImage ? 0.8 : 0.15
+                                        opacity: specialty.backgroundImage ? 1 : 0.15
                                     }}
                                 />
 

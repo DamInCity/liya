@@ -75,14 +75,10 @@ router.post('/',
             // Handle background image if uploaded
             if (req.file) {
                 try {
-                    const optimizedPath = await optimizeImage(req.file.path);
-                    backgroundImage = '/uploads/specialties/' + path.basename(optimizedPath);
+                    const result = await optimizeImage(req.file.path);
+                    backgroundImage = '/uploads/specialties/' + path.basename(result.optimizedPath);
                 } catch (error) {
                     console.error('Error optimizing image:', error);
-                    // Use original if optimization fails
-                    backgroundImage = '/uploads/specialties/' + req.file.filename;
-                }
-            }
                     // Use original if optimization fails
                     backgroundImage = '/uploads/specialties/' + req.file.filename;
                 }
@@ -134,8 +130,8 @@ router.put('/:id',
             // Handle new background image if uploaded
             if (req.file) {
                 try {
-                    const optimizedPath = await optimizeImage(req.file.path);
-                    backgroundImage = '/uploads/specialties/' + path.basename(optimizedPath);
+                    const result = await optimizeImage(req.file.path);
+                    backgroundImage = '/uploads/specialties/' + path.basename(result.optimizedPath);
                     
                     // Delete old background image if it exists
                     if (data.specialties[specialtyIndex].backgroundImage) {
