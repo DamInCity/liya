@@ -1,32 +1,15 @@
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-interface GalleryImage {
-    id: string;
-    url: string;
-    filename: string;
-}
-
 export const CTASection = () => {
     const [showSticky, setShowSticky] = useState(false);
     const { scrollY } = useScroll();
-    const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
 
-    useEffect(() => {
-        const fetchGalleryImages = async () => {
-            try {
-                const apiUrl = import.meta.env.VITE_API_URL || '/api';
-                const response = await fetch(`${apiUrl}/gallery/public`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setGalleryImages(data.slice(0, 3));
-                }
-            } catch (error) {
-                console.error('Error fetching gallery images:', error);
-            }
-        };
-        fetchGalleryImages();
-    }, []);
+    const brandLogos = [
+        { src: '/liya/Eagle-Hills-logo.webp', alt: 'Eagle Hills' },
+        { src: '/liya/heineken.webp', alt: 'Heineken' },
+        { src: '/liya/wegagen.webp', alt: 'Wegagen Bank' },
+    ];
 
     useEffect(() => {
         return scrollY.on('change', (latest) => {
@@ -81,28 +64,17 @@ export const CTASection = () => {
                                 >
                                     Use the form or WhatsApp link below to discuss your project, dates, and requirements. For bookings and serious enquiries only.
                                 </p>
-                                <div className="flex items-center gap-4 text-sm mb-0" style={{ color: 'var(--text-muted)' }}>
-                                    <div className="flex -space-x-2">
-                                        {galleryImages.length > 0 ? (
-                                            galleryImages.map((img, idx) => {
-                                                const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
-                                                return (
-                                                    <img
-                                                        key={img.id}
-                                                        src={`${backendUrl}${img.url}`}
-                                                        alt={`Gallery ${idx + 1}`}
-                                                        className="w-10 h-10 rounded-full border-2 object-cover"
-                                                        style={{ borderColor: 'var(--bg-main)' }}
-                                                    />
-                                                );
-                                            })
-                                        ) : (
-                                            <>
-                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent)] to-[#C896FF] border-2" style={{ borderColor: 'var(--bg-main)' }} />
-                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C896FF] to-[#8B3FD9] border-2" style={{ borderColor: 'var(--bg-main)' }} />
-                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#8B3FD9] to-[var(--accent)] border-2" style={{ borderColor: 'var(--bg-main)' }} />
-                                            </>
-                                        )}
+                                <div className="flex flex-col gap-3 text-sm mb-0" style={{ color: 'var(--text-muted)' }}>
+                                    <div className="flex space-x-2">
+                                        {brandLogos.map((logo, idx) => (
+                                            <img
+                                                key={idx}
+                                                src={logo.src}
+                                                alt={logo.alt}
+                                                className="w-10 h-10 rounded-full border-2 object-cover bg-white"
+                                                style={{ borderColor: 'var(--bg-main)' }}
+                                            />
+                                        ))}
                                     </div>
                                     <span>Trusted by: Wegagen Bank, Heineken, Diageo Ethiopia, Great Ethiopian Run, Eagle Hills Ethiopia…</span>
                                 </div>
