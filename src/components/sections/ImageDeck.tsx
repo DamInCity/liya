@@ -10,7 +10,7 @@ const socialCards = [
             </svg>
         ),
         color: '#25D366',
-        url: 'https://wa.me/+251953426987',
+        url: 'https://wa.me/251964049395',
         gradient: 'from-green-500 to-green-600'
     },
     { 

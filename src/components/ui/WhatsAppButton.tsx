@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 export const WhatsAppButton = () => {
-    const whatsappUrl = 'https://wa.me/251912345678'; // TODO: Replace with Liya's actual WhatsApp number (Ethiopian format: +251...)
+    const whatsappUrl = 'https://wa.me/251964049395';
 
     return (
         <motion.a

@@ -142,7 +142,7 @@ export const CTASection = () => {
                                     Interested in working together?
                                 </span>
                                 <a
-                                    href="https://wa.me/1234567890"
+                                    href="https://wa.me/251964049395"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform"
